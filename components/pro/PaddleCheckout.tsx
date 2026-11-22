@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { setLicenseState } from "@/lib/storage/db";
+import { useRouter } from "next/navigation";
 
 declare global {
   interface Window {
@@ -10,6 +10,7 @@ declare global {
 }
 
 export default function PaddleCheckout() {
+  const router = useRouter();
   const [ready, setReady] = useState(false);
   const [loading, setLoading] = useState(false);
   const clientToken = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN;
@@ -54,10 +55,9 @@ export default function PaddleCheckout() {
     if (window.Paddle?.Checkout?.setEventCallback) {
       window.Paddle.Checkout.setEventCallback((data: any) => {
         if (data?.name === "checkout.completed") {
-          setLicenseState({ verified: true, pro: true, verifiedAt: new Date().toISOString() }).then(() => {
-            setLoading(false);
-            alert("Purchase complete. Pro is now active on this browser.");
-          });
+          setLoading(false);
+          alert("Purchase received. Check your email to activate EasyBillKit Pro.");
+          router.push("/activate");
         }
       });
     } else {
