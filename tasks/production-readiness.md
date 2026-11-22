@@ -116,22 +116,22 @@
 ## Phase B — Pro and payments
 
 - [x] [P1] Pricing page (free vs Pro, one-time, inclusions, refund/license/device limitations, no account required, local data no sync, activation may need internet).
-- [ ] [P1] Gumroad product setup (owner action) + hosted checkout link/button.
+- [x] [P1] Gumroad product setup (owner action) + hosted checkout link/button.
 - [x] [P1] License activation page (key field, activate, loading, success/failure, help link, privacy).
 - [x] [P1] License verification via official Gumroad mechanism (no secrets in frontend).
 - [x] [P1] Handle invalid/revoked/exhausted/network/rate-limit/outage; never log/track keys.
-- [ ] [P1] Grace period for previously verified entitlement during provider outage (disclosed).
+- [x] [P1] Grace period for previously verified entitlement during provider outage (disclosed).
 - [x] [P1] Re-verify/restore action.
-- [ ] [P1] Pro feature gating (premium templates, brand colors, multiple profiles, themes, CSV export, batch PDF if implemented, ad-free).
-- [ ] [P1] Ad-free experience for Pro if promised (consistent).
+- [x] [P1] Pro feature gating (premium templates, brand colors, multiple profiles, themes, CSV export, batch PDF if implemented, ad-free).
+- [x] [P1] Ad-free experience for Pro if promised (consistent).
 - [x] [P1] Honest security model disclosures (frontend gates not DRM).
 
 ---
 
 ## Phase C — SEO and content
 
-- [ ] [P1] Core SEO pages (free invoice generator, estimate maker, receipt maker, contractor/handyman/cleaning/landscaping/plumber/electrician/freelancer/consultant/tutor invoice generators).
-- [ ] [P1] Utility pages (estimate-template, receipt-template, invoice-number-generator, hourly-invoice-calculator).
+- [x] [P1] Core SEO pages (free invoice generator, estimate maker, receipt maker, contractor/handyman/cleaning/landscaping/plumber/electrician/freelancer/consultant/tutor invoice generators).
+- [x] [P1] Utility pages (estimate-template, receipt-template, invoice-number-generator, hourly-invoice-calculator).
 - [ ] [P1] Unique title/meta, one H1, headings, original copy, working tool, FAQs, internal links, canonical, OG metadata, alt text.
 - [ ] [P1] XML sitemap, robots.txt, canonical trailing slash/host, HTTPS, redirects, favicon/social image.
 - [ ] [P1] Avoid indexing app states/activation URLs/query variants/private views; no client data in URLs.
@@ -167,8 +167,8 @@
 
 ## Cross-cutting
 
-- [ ] [P0] Legal pages: privacy policy accurate (local storage, Gumroad data, analytics, ads, deletion, no sync), terms with disclaimers, about, contact with mailto:hello@flipfee.online.
-- [ ] [P0] Contact email hello@flipfee.online on contact/footer/privacy/terms.
-- [ ] [P0] No fake contact form.
+- [x] [P0] Legal pages: privacy policy accurate (local storage, Gumroad data, analytics, ads, deletion, no sync), terms with disclaimers, about, contact with mailto:hello@flipfee.online.
+- [x] [P0] Contact email hello@flipfee.online on contact/footer/privacy/terms.
+- [x] [P0] No fake contact form.
 - [ ] [P1] Error handling & recovery; no silent data loss.
 - [ ] [P1] Offline/network error handling; don't promise offline until tested.
