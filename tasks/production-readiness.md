@@ -19,8 +19,8 @@
 - [x] [P0] Configure secure response headers (vercel.json).
 - [x] [P0] Set up lint, typecheck, test, build scripts.
 - [x] [P1] Set up error boundary (app/error.tsx) and not-found page.
-- [ ] [P1] Add privacy-friendly analytics wiring (lib/analytics) — page-level events only, no document data.
-- [ ] [P1] Add Web Vitals reporting.
+- [x] [P1] Add privacy-friendly analytics wiring (lib/analytics) — page-level events only, no document data.
+- [x] [P1] Add Web Vitals reporting.
 - [ ] [P2] Add consent/cookie banner if required by ad config.
 
 ---
@@ -148,7 +148,7 @@
 - [ ] [P2] Implement approved ad code in safe placements (homepage below value prop, guide/template pages within content; no ads in editor active area/checkout/activation/PDFs).
 - [ ] [P2] Reserve ad slots; avoid layout shift; no ads blocking editor.
 - [ ] [P2] Consent/privacy tooling per jurisdiction.
-- [ ] [P2] Pro ad-free behavior if promised.
+- [x] [P2] Pro ad-free behavior if promised.
 
 ---
 
