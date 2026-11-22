@@ -2,11 +2,12 @@ export const metadata = { title: "Contact", description: "Contact SimpleInvoice 
 
 export default function ContactPage() {
   return (
-    <section className="max-w-6xl mx-auto px-4 py-10">
+    <section className="max-w-3xl mx-auto px-4 py-6 space-y-4">
       <h1 className="text-2xl font-bold text-green-950">Contact</h1>
-      <p className="mt-3 text-muted">
-        Email <a href="mailto:hello@flipfee.online" className="text-green-700">hello@flipfee.online</a>.
-      </p>
+      <div className="glass-card p-5 space-y-3 text-sm text-muted">
+        <p>For support, feedback, or corrections, email us:</p>
+        <a href="mailto:hello@flipfee.online" className="text-green-700 font-medium">hello@flipfee.online</a>
+      </div>
     </section>
   );
 }

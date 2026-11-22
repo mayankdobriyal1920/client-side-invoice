@@ -28,73 +28,73 @@
 ## Phase A — Core free product
 
 ### A1. Money & calculation engine (lib/calculations, lib/formatting)
-- [ ] [P0] Implement money as integer minor units (cents) utilities.
-- [ ] [P0] Implement decimal-safe line subtotal (qty × unit price).
-- [ ] [P0] Implement per-line discount (percentage and fixed).
-- [ ] [P0] Implement document-level discount (percentage and fixed).
-- [ ] [P0] Implement shipping/expense/additional charge.
-- [ ] [P0] Implement tax calculation (user-entered rate or manual amount; no auto rates).
-- [ ] [P0] Implement deposits/amount paid and balance due.
-- [ ] [P0] Implement grand total.
-- [ ] [P0] Define and document rounding policy (line vs document); tests.
-- [ ] [P0] Currency formatting (USD default) with user-selected date format.
-- [ ] [P0] Date handling using local calendar dates (no UTC day shift).
-- [ ] [P0] Unit tests for all calculations (line subtotal, qty decimals, % discount, fixed discount, doc discount, tax %, manual tax, partial payment, balance, rounding, currency formatting).
+- [x] [P0] Implement money as integer minor units (cents) utilities.
+- [x] [P0] Implement decimal-safe line subtotal (qty × unit price).
+- [x] [P0] Implement per-line discount (percentage and fixed).
+- [x] [P0] Implement document-level discount (percentage and fixed).
+- [x] [P0] Implement shipping/expense/additional charge.
+- [x] [P0] Implement tax calculation (user-entered rate or manual amount; no auto rates).
+- [x] [P0] Implement deposits/amount paid and balance due.
+- [x] [P0] Implement grand total.
+- [x] [P0] Define and document rounding policy (line vs document); tests.
+- [x] [P0] Currency formatting (USD default) with user-selected date format.
+- [x] [P0] Date handling using local calendar dates (no UTC day shift).
+- [x] [P0] Unit tests for all calculations (line subtotal, qty decimals, % discount, fixed discount, doc discount, tax %, manual tax, partial payment, balance, rounding, currency formatting).
 
 ### A2. Validation (lib/validation)
-- [ ] [P0] Quantity positive, unit price non-negative, discount ≤ line amount.
-- [ ] [P0] Prevent NaN/Infinity; inline errors.
-- [ ] [P0] Due date not earlier than issue date unless override.
-- [ ] [P0] Zod schemas for document/client/business profile.
-- [ ] [P0] Sanitize user-entered text before render (no dangerouslySetInnerHTML).
-- [ ] [P0] Uploaded image validation (type, size ≤ ~2MB).
+- [x] [P0] Quantity positive, unit price non-negative, discount ≤ line amount.
+- [x] [P0] Prevent NaN/Infinity; inline errors.
+- [x] [P0] Due date not earlier than issue date unless override.
+- [x] [P0] Zod schemas for document/client/business profile.
+- [x] [P0] Sanitize user-entered text before render (no dangerouslySetInnerHTML).
+- [x] [P0] Uploaded image validation (type, size ≤ ~2MB).
 
 ### A3. Storage (lib/storage)
-- [ ] [P0] IndexedDB wrapper for business profile, clients, catalog items, invoices, estimates, receipts, numbering prefs, user prefs, license state.
-- [ ] [P0] Versioned schema + safe migrations.
-- [ ] [P0] Handle storage quota failures gracefully; clear message if storage unavailable.
-- [ ] [P0] Never silently discard user data.
-- [ ] [P0] JSON backup export with filename sanitization.
-- [ ] [P0] JSON backup import with schema/version validation, preview counts, confirmation.
-- [ ] [P0] Safe replace (and merge if correctly implemented) with warning.
-- [ ] [P0] Visible notice about local-only storage.
+- [x] [P0] IndexedDB wrapper for business profile, clients, catalog items, invoices, estimates, receipts, numbering prefs, user prefs, license state.
+- [x] [P0] Versioned schema + safe migrations.
+- [x] [P0] Handle storage quota failures gracefully; clear message if storage unavailable.
+- [x] [P0] Never silently discard user data.
+- [x] [P0] JSON backup export with filename sanitization.
+- [x] [P0] JSON backup import with schema/version validation, preview counts, confirmation.
+- [x] [P0] Safe replace (and merge if correctly implemented) with warning.
+- [x] [P0] Visible notice about local-only storage.
 
 ### A4. Business profile & clients
-- [ ] [P0] Business profile form (name, contact, email, phone, address, city/state/ZIP, country, logo, website, tax ID/EIN optional with warning).
-- [ ] [P0] Logo upload (PNG/JPEG/WebP), local processing, preserve aspect ratio, remove/replace, size limit.
-- [ ] [P0] Client directory: add/edit/search/select/delete; warn before deleting referenced client.
-- [ ] [P0] Selecting client fills document.
+- [x] [P0] Business profile form (name, contact, email, phone, address, city/state/ZIP, country, logo, website, tax ID/EIN optional with warning).
+- [x] [P0] Logo upload (PNG/JPEG/WebP), local processing, preserve aspect ratio, remove/replace, size limit.
+- [x] [P0] Client directory: add/edit/search/select/delete; warn before deleting referenced client.
+- [x] [P0] Selecting client fills document.
 
 ### A5. Document editor (invoice/estimate/receipt)
-- [ ] [P0] Invoice editor layout (desktop left form/right live preview; mobile single column + preview tab).
-- [ ] [P0] Line items: add/remove/reorder/duplicate, select saved service, optional notes.
-- [ ] [P0] Document metadata: number, issue date, due/valid-until, PO/ref, currency, status, title.
-- [ ] [P0] Local sequential numbering (INV/EST/REC prefixes), editable prefix/next number, avoid duplicates locally.
-- [ ] [P0] Totals/adjustments UI (subtotal, discounts, shipping, tax, deposit/paid, balance, total).
+- [x] [P0] Invoice editor layout (desktop left form/right live preview; mobile single column + preview tab).
+- [x] [P0] Line items: add/remove/reorder/duplicate, select saved service, optional notes.
+- [x] [P0] Document metadata: number, issue date, due/valid-until, PO/ref, currency, status, title.
+- [x] [P0] Local sequential numbering (INV/EST/REC prefixes), editable prefix/next number, avoid duplicates locally.
+- [x] [P0] Totals/adjustments UI (subtotal, discounts, shipping, tax, deposit/paid, balance, total).
 - [ ] [P0] Unsaved-changes warning.
-- [ ] [P0] Save to IndexedDB; reopen/edit.
-- [ ] [P0] Duplicate document.
+- [x] [P0] Save to IndexedDB; reopen/edit.
+- [x] [P0] Duplicate document.
 - [ ] [P1] Reorder line items if practical.
 
 ### A6. Estimate & receipt specifics
-- [ ] [P0] Estimate: scope of work, assumptions, exclusions, terms, visual acceptance area (no legal e-signature claim).
-- [ ] [P0] Mark estimate accepted/declined locally.
-- [ ] [P0] Convert accepted estimate → new invoice (new number, preserve items/details, keep estimate, store reference, review before save).
-- [ ] [P0] Receipt: payment date, method label, amount received, related invoice, reference/transaction ID, notes.
-- [ ] [P0] Full/partial payment receipt; update invoice paid/balance after confirmation.
+- [x] [P0] Estimate: scope of work, assumptions, exclusions, terms, visual acceptance area (no legal e-signature claim).
+- [x] [P0] Mark estimate accepted/declined locally.
+- [x] [P0] Convert accepted estimate → new invoice (new number, preserve items/details, keep estimate, store reference, review before save).
+- [x] [P0] Receipt: payment date, method label, amount received, related invoice, reference/transaction ID, notes.
+- [x] [P0] Full/partial payment receipt; update invoice paid/balance after confirmation.
 
 ### A7. Document management (/documents)
-- [ ] [P0] Search by number/client/title; filter by type/status; sort by date/number/client/total.
-- [ ] [P0] Open/edit, duplicate, download PDF, print, delete with confirmation.
-- [ ] [P0] Convert estimate, record payment.
-- [ ] [P0] Export document data.
-- [ ] [P0] Overdue status only if due date past and balance > 0; explain local basis.
+- [x] [P0] Search by number/client/title; filter by type/status; sort by date/number/client/total.
+- [x] [P0] Open/edit, duplicate, download PDF, print, delete with confirmation.
+- [x] [P0] Convert estimate, record payment.
+- [x] [P0] Export document data.
+- [x] [P0] Overdue status only if due date past and balance > 0; explain local basis.
 
 ### A8. PDF & print
-- [ ] [P0] Real downloadable PDF (multi-page, repeating table headers, page numbers, document number).
-- [ ] [P0] Include business/client details, totals, logo; selectable text.
-- [ ] [P0] Sanitized file names (Invoice-INV-0001.pdf etc.).
-- [ ] [P0] Print stylesheet: hide nav/controls/ads; print only document; no clipped margins.
+- [x] [P0] Real downloadable PDF (multi-page, repeating table headers, page numbers, document number).
+- [x] [P0] Include business/client details, totals, logo; selectable text.
+- [x] [P0] Sanitized file names (Invoice-INV-0001.pdf etc.).
+- [x] [P0] Print stylesheet: hide nav/controls/ads; print only document; no clipped margins.
 - [ ] [P0] PDF quality tests (empty optionals, long names/descriptions, 1/10/25/50 items, multi-page, logo present/absent, large totals, discounts/taxes, partial payment, invalid input rejection, mobile download).
 
 ### A9. UI/UX & accessibility
@@ -115,16 +115,16 @@
 
 ## Phase B — Pro and payments
 
-- [ ] [P1] Pricing page (free vs Pro, one-time, inclusions, refund/license/device limitations, no account required, local data no sync, activation may need internet).
+- [x] [P1] Pricing page (free vs Pro, one-time, inclusions, refund/license/device limitations, no account required, local data no sync, activation may need internet).
 - [ ] [P1] Gumroad product setup (owner action) + hosted checkout link/button.
-- [ ] [P1] License activation page (key field, activate, loading, success/failure, help link, privacy).
-- [ ] [P1] License verification via official Gumroad mechanism (no secrets in frontend).
-- [ ] [P1] Handle invalid/revoked/exhausted/network/rate-limit/outage; never log/track keys.
+- [x] [P1] License activation page (key field, activate, loading, success/failure, help link, privacy).
+- [x] [P1] License verification via official Gumroad mechanism (no secrets in frontend).
+- [x] [P1] Handle invalid/revoked/exhausted/network/rate-limit/outage; never log/track keys.
 - [ ] [P1] Grace period for previously verified entitlement during provider outage (disclosed).
-- [ ] [P1] Re-verify/restore action.
+- [x] [P1] Re-verify/restore action.
 - [ ] [P1] Pro feature gating (premium templates, brand colors, multiple profiles, themes, CSV export, batch PDF if implemented, ad-free).
 - [ ] [P1] Ad-free experience for Pro if promised (consistent).
-- [ ] [P1] Honest security model disclosures (frontend gates not DRM).
+- [x] [P1] Honest security model disclosures (frontend gates not DRM).
 
 ---
 

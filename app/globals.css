@@ -117,3 +117,10 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff !important; }
+  main { padding: 0 !important; }
+  .glass-card, .glass, .glass-strong { box-shadow: none !important; border: 1px solid #ddd !important; background: #fff !important; backdrop-filter: none !important; }
+}

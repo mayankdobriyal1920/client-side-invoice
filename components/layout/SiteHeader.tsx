@@ -12,7 +12,7 @@ const nav = [
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40">
+    <header className="sticky top-0 z-40 no-print">
       <div className="glass-strong mx-3 mt-3 rounded-2xl px-4 h-16 flex items-center justify-between md:mx-6">
         <Link href="/" className="flex items-center gap-2 font-semibold text-green-900">
           <Image src="/logo.png" alt="SimpleInvoice Studio logo" width={30} height={30} className="rounded-lg" />
