@@ -16,6 +16,7 @@ export default function PaddleCheckout() {
   const clientToken = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN;
   const priceId = process.env.NEXT_PUBLIC_PADDLE_PRICE_ID;
   const env = process.env.NEXT_PUBLIC_PADDLE_ENV || "sandbox";
+  const discountCode = process.env.NEXT_PUBLIC_PADDLE_DISCOUNT_SECRET || process.env.NEXT_PUBLIC_PADDLE_DISCOUNT_CODE;
 
   useEffect(() => {
     if (!clientToken) return;
@@ -45,6 +46,7 @@ export default function PaddleCheckout() {
     setLoading(true);
     window.Paddle.Checkout.open({
       items: [{ priceId, quantity: 1 }],
+      discountCode: discountCode || undefined,
       settings: {
         displayMode: "overlay",
         theme: "light",

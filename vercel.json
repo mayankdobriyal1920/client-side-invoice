@@ -4,7 +4,8 @@
     "NEXT_PUBLIC_ADSENSE_CLIENT": "ca-pub-3366036914417048",
     "NEXT_PUBLIC_PADDLE_CLIENT_TOKEN": "",
     "NEXT_PUBLIC_PADDLE_PRICE_ID": "",
-    "NEXT_PUBLIC_PADDLE_ENV": "production"
+    "NEXT_PUBLIC_PADDLE_ENV": "production",
+    "NEXT_PUBLIC_PADDLE_DISCOUNT_SECRET": ""
   },
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
