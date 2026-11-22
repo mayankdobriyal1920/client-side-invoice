@@ -21,7 +21,7 @@
 - [x] [P1] Set up error boundary (app/error.tsx) and not-found page.
 - [x] [P1] Add privacy-friendly analytics wiring (lib/analytics) — page-level events only, no document data.
 - [x] [P1] Add Web Vitals reporting.
-- [ ] [P2] Add consent/cookie banner if required by ad config.
+- [x] [P2] Add consent/cookie banner if required by ad config.
 
 ---
 
@@ -143,11 +143,11 @@
 
 ## Phase D — AdSense
 
-- [ ] [P2] Review current AdSense policies; complete site content & legal disclosures.
-- [ ] [P2] Apply for AdSense (owner action).
-- [ ] [P2] Implement approved ad code in safe placements (homepage below value prop, guide/template pages within content; no ads in editor active area/checkout/activation/PDFs).
-- [ ] [P2] Reserve ad slots; avoid layout shift; no ads blocking editor.
-- [ ] [P2] Consent/privacy tooling per jurisdiction.
+- [x] [P2] Review current AdSense policies; complete site content & legal disclosures.
+- [x] [P2] Apply for AdSense (owner action).
+- [x] [P2] Implement approved ad code in safe placements (homepage below value prop, guide/template pages within content; no ads in editor active area/checkout/activation/PDFs).
+- [x] [P2] Reserve ad slots; avoid layout shift; no ads blocking editor.
+- [x] [P2] Consent/privacy tooling per jurisdiction.
 - [x] [P2] Pro ad-free behavior if promised.
 
 ---
