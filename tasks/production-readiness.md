@@ -137,7 +137,7 @@
 - [x] [P1] Avoid indexing app states/activation URLs/query variants/private views; no client data in URLs.
 - [ ] [P1] Structured data only where qualifies; no fake review/rating schema.
 - [x] [P2] Industry pages with genuinely relevant examples (fictional data), tips, payment terms, FAQ, limitations.
-- [ ] [P2] Search Console setup (owner action).
+- [x] [P2] Search Console setup (owner action).
 
 ---
 
