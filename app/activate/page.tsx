@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { useLicenseStatus } from "@/hooks/useLicenseStatus";
 import { setLicenseState } from "@/lib/storage/db";
 
-export default function ActivatePage() {
+function ActivateContent() {
   const { isPro, refresh } = useLicenseStatus();
   const [email, setEmail] = useState("");
+  const searchParams = useSearchParams();
+  const justPurchased = searchParams.get("purchased") === "1";
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState<"email" | "otp">("email");
   const [message, setMessage] = useState("");
@@ -67,7 +70,14 @@ export default function ActivatePage() {
     <section className="max-w-3xl mx-auto px-4 py-6 space-y-4">
       <h1 className="text-2xl font-bold text-green-950">Activate EasyBillKit Pro</h1>
       <div className="glass-card p-5 space-y-3 text-sm text-muted">
-        <p>Already purchased? Enter the email used at checkout to receive a verification code.</p>
+        {justPurchased && (
+          <div className="text-center mb-4">
+            <div className="w-10 h-10 rounded-full bg-green-100 text-green-700 font-bold flex items-center justify-center mx-auto mb-2">✓</div>
+            <h2 className="text-xl font-bold text-green-950">Purchase complete!</h2>
+            <p className="mt-2 text-muted">Your order is placed. To unlock Pro on this browser, enter the email you used at checkout below and verify it with the code we send.</p>
+          </div>
+        )}
+        {!justPurchased && <p>Already purchased? Enter the email used at checkout to receive a verification code.</p>}
         {isPro && <p className="text-green-700 font-medium">Pro is active on this browser.</p>}
         {step === "email" && (
           <>
@@ -94,5 +104,13 @@ export default function ActivatePage() {
         )}
       </div>
     </section>
+  );
+}
+
+export default function ActivatePage() {
+  return (
+    <Suspense fallback={<div className="max-w-3xl mx-auto px-4 py-6">Loading activation…</div>}>
+      <ActivateContent />
+    </Suspense>
   );
 }

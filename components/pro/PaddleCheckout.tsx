@@ -57,8 +57,7 @@ export default function PaddleCheckout() {
       window.Paddle.Checkout.setEventCallback((data: any) => {
         if (data?.name === "checkout.completed") {
           setLoading(false);
-          alert("Purchase received. Check your email to activate EasyBillKit Pro.");
-          router.push("/activate");
+          router.push("/activate?purchased=1");
         }
       });
     } else {
