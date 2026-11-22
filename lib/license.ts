@@ -6,7 +6,7 @@ export interface LicenseStatus {
 
 export async function fetchLicenseStatus(): Promise<LicenseStatus> {
   try {
-    const res = await fetch("/api/license/status", { credentials: "include" });
+    const res = await fetch("/api/license/status", { credentials: "include", cache: "no-store" });
     if (!res.ok) return { authenticated: false, isPro: false };
     return await res.json();
   } catch {
