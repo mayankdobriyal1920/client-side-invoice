@@ -1,4 +1,5 @@
 import Link from "next/link";
+import JsonLd from "@/components/seo/JsonLd";
 
 export interface GuideContent {
   title: string;
@@ -12,7 +13,17 @@ export interface GuideContent {
 
 export default function GuidePage({ content }: { content: GuideContent }) {
   return (
-    <section className="max-w-3xl mx-auto px-4 py-6 space-y-6">
+    <>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": content.faq.map((f) => ({
+          "@type": "Question",
+          "name": f.q,
+          "acceptedAnswer": { "@type": "Answer", "text": f.a },
+        })),
+      }} />
+      <section className="max-w-3xl mx-auto px-4 py-6 space-y-6">
       <h1 className="text-2xl font-bold text-green-950">{content.title}</h1>
       <div className="glass-card p-5 space-y-3 text-sm text-muted">
         <p>{content.intro}</p>
@@ -52,5 +63,6 @@ export default function GuidePage({ content }: { content: GuideContent }) {
         Tax and legal requirements vary by jurisdiction. You are responsible for your entries.
       </p>
     </section>
+    </>
   );
 }

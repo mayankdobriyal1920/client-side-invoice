@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { pageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/seo/JsonLd";
 
 export const metadata = pageMetadata({
   title: "EasyBillKit — Free Invoice, Estimate & Receipt Maker",
@@ -19,7 +20,18 @@ const features = [
 
 export default function HomePage() {
   return (
-    <div className="relative">
+    <>
+      <JsonLd data={{
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "EasyBillKit",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "Create professional invoices, estimates, and receipts in your browser. No account required.",
+        "url": "https://easybillkit.online",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      }} />
+      <div className="relative">
       {/* Hero */}
       <section className="max-w-6xl mx-auto px-4 pt-10 pb-16 md:pt-16 md:pb-24">
         <div className="glass-strong rounded-3xl p-8 md:p-14 text-center animate-fade-up">
@@ -84,5 +96,6 @@ export default function HomePage() {
         </div>
       </section>
     </div>
+    </>
   );
 }
