@@ -72,7 +72,9 @@ export function validateDateOrder(issue: string, other: string | undefined): str
 
 export function validateZip(value: string | undefined): string | null {
   if (!value || value.trim() === "") return null;
-  if (!/^\d{5}(-\d{4})?$/.test(value.trim())) return "ZIP must be 5 digits (or ZIP+4).";
+  const v = value.trim();
+  if (v.length > 8) return "ZIP must be at most 8 characters.";
+  if (!/^[A-Za-z0-9 -]{3,8}$/.test(v)) return "ZIP must be 3–8 characters.";
   return null;
 }
 
