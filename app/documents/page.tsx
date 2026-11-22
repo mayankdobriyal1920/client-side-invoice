@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import type { BaseDocument } from "@/types";
+import { useLicenseStatus } from "@/hooks/useLicenseStatus";
+import { documentsToCsv, downloadCsv } from "@/lib/formatting/csv";
 import { listDocuments, deleteDocument, saveDocument, getNumberingPrefs, setNumberingPrefs } from "@/lib/storage/db";
 import { formatCents } from "@/lib/calculations/money";
 import { computeTotals } from "@/lib/calculations/invoice";
@@ -24,6 +26,7 @@ export default function DocumentsPage() {
   const [statusFilter, setStatusFilter] = useState("all");
   const [sort, setSort] = useState("date-desc");
   const [dateFormat, setDateFormat] = useState("MM/DD/YYYY");
+  const { isPro } = useLicenseStatus();
 
   const reload = async () => {
     setDocs(await listDocuments());
@@ -133,6 +136,11 @@ export default function DocumentsPage() {
           <option value="number">Number</option>
           <option value="client">Client</option>
         </select>
+        {isPro && (
+          <button onClick={() => downloadCsv("easybillkit-documents.csv", documentsToCsv(filtered))} className="btn-primary px-3 py-2 rounded-xl text-sm font-medium">
+            Export CSV (Pro)
+          </button>
+        )}
       </div>
       <div className="space-y-3">
         {filtered.map((d) => (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useLicenseStatus } from "@/hooks/useLicenseStatus";
 
 interface Props {
   slot: string;
@@ -10,6 +11,7 @@ interface Props {
 
 export default function AdSlot({ slot, format = "auto", className }: Props) {
   const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+  const { isPro } = useLicenseStatus();
   useEffect(() => {
     if (!client) return;
     try {
@@ -17,6 +19,7 @@ export default function AdSlot({ slot, format = "auto", className }: Props) {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch {}
   }, [client]);
+  if (isPro) return null; // ad-free for Pro
   if (!client) return null;
   return (
     <div className={className}>

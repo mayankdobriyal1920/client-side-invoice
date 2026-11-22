@@ -28,6 +28,7 @@ export interface BusinessProfile {
   phone?: string;
   address?: Address;
   logoDataUrl?: string;
+  accentColor?: string;
   website?: string;
   taxId?: string;
   isDefault?: boolean;

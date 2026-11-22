@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLicenseStatus } from "@/hooks/useLicenseStatus";
 import { required, validateEmail, validatePhone, validateZip, validateUrl } from "@/lib/validation";
 import type { BusinessProfile, NumberingPrefs, UserPrefs } from "@/types";
 import {
@@ -25,6 +26,7 @@ export default function SettingsPage() {
   const [up, setUp] = useState<UserPrefs | null>(null);
   const [msg, setMsg] = useState("");
   const [errors, setErrors] = useState<Record<string,string>>({});
+  const { isPro } = useLicenseStatus();
 
   const reload = async () => {
     setProfiles(await listBusinessProfiles());
@@ -159,6 +161,12 @@ export default function SettingsPage() {
                 <img src={editing.logoDataUrl} alt="logo" className="h-12 mt-2" />
               )}
             </div>
+            {isPro && (
+              <label className="text-sm block">
+                <span className="text-muted">Brand accent color (Pro)</span>
+                <input type="color" className="glass-input w-16 h-10 mt-1 cursor-pointer" value={editing.accentColor || "#0a9b68"} onChange={(e) => setEditing({ ...editing, accentColor: e.target.value })} />
+              </label>
+            )}
             <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={editing.isDefault || false} onChange={(e) => setEditing({ ...editing, isDefault: e.target.checked })} /> Default profile</label>
             <div className="flex gap-2">
               <button onClick={saveProfile} className="btn-primary px-4 py-2 rounded-xl text-sm font-medium">Save</button>
