@@ -21,7 +21,7 @@ const routes = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((r) => ({
-    url: `https://flipfee.online${r}`,
+    url: `https://easybillkit.online${r}`,
     lastModified: new Date(),
   }));
 }

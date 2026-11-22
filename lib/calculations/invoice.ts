@@ -66,7 +66,10 @@ export function computeTotals(doc: Pick<BaseDocument, "lineItems" | "documentDis
     taxCents = applyPercent(discountedSubtotal, rate);
   }
 
-  const totalCents = discountedSubtotal + shippingCents + taxCents;
+  let totalCents = discountedSubtotal + shippingCents + taxCents;
+  if (doc.lineItems.length === 0 && (doc.amountPaidCents ?? 0) > 0) {
+    totalCents = Math.max(0, Math.round(doc.amountPaidCents ?? 0));
+  }
   const paidCents = Math.max(0, Math.round((doc.amountPaidCents ?? 0) + (doc.depositCents ?? 0)));
   const balanceCents = Math.max(0, totalCents - paidCents);
 

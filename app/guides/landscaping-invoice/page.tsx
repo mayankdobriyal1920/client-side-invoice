@@ -1,10 +1,6 @@
-export const metadata = { title: "landscaping invoice template", description: "Guide coming soon." };
+import GuidePage from "@/components/content/GuidePage";
+import { guides } from "@/data/guides";
 
 export default function Page() {
-  return (
-    <section className="max-w-6xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold text-green-950">landscaping invoice invoice template</h1>
-      <p className="mt-3 text-muted">Guide coming soon.</p>
-    </section>
-  );
+  return <GuidePage content={guides.landscaping} />;
 }

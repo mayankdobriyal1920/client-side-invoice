@@ -1,3 +1,4 @@
+
 import DocumentEditor from "@/components/editor/DocumentEditor";
 
 export const metadata = { title: "Free Invoice Generator", description: "Create and download a professional invoice PDF in your browser." };

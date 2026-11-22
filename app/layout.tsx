@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "SimpleInvoice Studio — Free Invoice, Estimate & Receipt Maker",
   description:
     "Create professional invoices, estimates, and receipts in your browser. No account required. Export a clean PDF in seconds.",
-  metadataBase: new URL("https://flipfee.online"),
+  metadataBase: new URL("https://easybillkit.online"),
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",

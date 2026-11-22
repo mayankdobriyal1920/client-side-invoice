@@ -109,7 +109,7 @@
 - [ ] [P0] Integration: estimate → accepted → convert to invoice.
 - [ ] [P0] Integration: invoice → partial payment → receipt.
 - [ ] [P0] Integration: export backup → clear data → import → verify.
-- [ ] [P0] Browser tests: Chrome/Safari/Firefox desktop, Mobile Safari/Chrome (PDF download, print, logo upload, IndexedDB, refresh, mobile keyboard, no overflow).
+- [~] [P0] Browser tests: Chrome/Safari/Firefox desktop, Mobile Safari/Chrome (PDF download, print, logo upload, IndexedDB, refresh, mobile keyboard, no overflow).
 
 ---
 
@@ -136,7 +136,7 @@
 - [ ] [P1] XML sitemap, robots.txt, canonical trailing slash/host, HTTPS, redirects, favicon/social image.
 - [ ] [P1] Avoid indexing app states/activation URLs/query variants/private views; no client data in URLs.
 - [ ] [P1] Structured data only where qualifies; no fake review/rating schema.
-- [ ] [P2] Industry pages with genuinely relevant examples (fictional data), tips, payment terms, FAQ, limitations.
+- [x] [P2] Industry pages with genuinely relevant examples (fictional data), tips, payment terms, FAQ, limitations.
 - [ ] [P2] Search Console setup (owner action).
 
 ---
