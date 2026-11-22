@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLicenseStatus } from "@/hooks/useLicenseStatus";
+import { setLicenseState } from "@/lib/storage/db";
 
 export default function ActivatePage() {
   const { isPro, refresh } = useLicenseStatus();
@@ -41,8 +42,11 @@ export default function ActivatePage() {
       });
       const data = await res.json();
       if (res.ok && data.isPro) {
+        await setLicenseState({ verified: true, pro: true, verifiedAt: new Date().toISOString() });
         setMessage("Pro activated on this browser.");
         await refresh();
+        // refresh the page so all components reflect the new state
+        setTimeout(() => window.location.reload(), 800);
       } else {
         setMessage(data.error || "Verification failed.");
       }
