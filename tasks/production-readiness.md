@@ -135,7 +135,7 @@
 - [x] [P1] Unique title/meta, one H1, headings, original copy, working tool, FAQs, internal links, canonical, OG metadata, alt text.
 - [x] [P1] XML sitemap, robots.txt, canonical trailing slash/host, HTTPS, redirects, favicon/social image.
 - [x] [P1] Avoid indexing app states/activation URLs/query variants/private views; no client data in URLs.
-- [ ] [P1] Structured data only where qualifies; no fake review/rating schema.
+- [x] [P1] Structured data only where qualifies; no fake review/rating schema.
 - [x] [P2] Industry pages with genuinely relevant examples (fictional data), tips, payment terms, FAQ, limitations.
 - [x] [P2] Search Console setup (owner action).
 
