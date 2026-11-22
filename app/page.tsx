@@ -83,6 +83,51 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* How it works */}
+      <section className="max-w-6xl mx-auto px-4 pb-20">
+        <h2 className="text-2xl md:text-3xl font-bold text-green-950 text-center mb-8">How it works</h2>
+        <div className="grid gap-5 sm:grid-cols-3">
+          <div className="glass-card p-6 text-center">
+            <div className="w-10 h-10 rounded-full bg-green-700 text-white font-bold flex items-center justify-center mx-auto mb-3">1</div>
+            <h3 className="font-semibold text-green-950">Enter your details</h3>
+            <p className="mt-2 text-sm text-muted">Add your business and client info, then line items with quantities and prices. Tax and discounts are fully under your control.</p>
+          </div>
+          <div className="glass-card p-6 text-center">
+            <div className="w-10 h-10 rounded-full bg-green-700 text-white font-bold flex items-center justify-center mx-auto mb-3">2</div>
+            <h3 className="font-semibold text-green-950">Preview live</h3>
+            <p className="mt-2 text-sm text-muted">See a professional preview update as you type. Check totals, balance due, and payment terms before exporting.</p>
+          </div>
+          <div className="glass-card p-6 text-center">
+            <div className="w-10 h-10 rounded-full bg-green-700 text-white font-bold flex items-center justify-center mx-auto mb-3">3</div>
+            <h3 className="font-semibold text-green-950">Export PDF or print</h3>
+            <p className="mt-2 text-sm text-muted">Download a clean, multi-page PDF with no watermark, or print directly. Everything happens in your browser — no upload, no account.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="max-w-6xl mx-auto px-4 pb-20">
+        <h2 className="text-2xl md:text-3xl font-bold text-green-950 text-center mb-8">Frequently asked questions</h2>
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="glass-card p-5">
+            <h3 className="font-semibold text-green-950">Is EasyBillKit really free?</h3>
+            <p className="mt-2 text-sm text-muted">Yes. Creating invoices, estimates, and receipts and exporting PDFs is free. An optional one-time Pro upgrade adds premium templates and extra features.</p>
+          </div>
+          <div className="glass-card p-5">
+            <h3 className="font-semibold text-green-950">Where is my data stored?</h3>
+            <p className="mt-2 text-sm text-muted">In your browser on this device using IndexedDB. Nothing is uploaded to a server. Export a backup regularly to avoid data loss.</p>
+          </div>
+          <div className="glass-card p-5">
+            <h3 className="font-semibold text-green-950">Do I need an account?</h3>
+            <p className="mt-2 text-sm text-muted">No. You can start creating documents immediately without signing up.</p>
+          </div>
+          <div className="glass-card p-5">
+            <h3 className="font-semibold text-green-950">Can I use it on mobile?</h3>
+            <p className="mt-2 text-sm text-muted">Yes. The editor is responsive and works on phones and tablets. PDF download works on supported mobile browsers.</p>
+          </div>
+        </div>
+      </section>
+
       {/* CTA band */}
       <section className="max-w-6xl mx-auto px-4 pb-20">
         <div className="glass rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
