@@ -27,6 +27,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         <main className="flex-1 relative">{children}</main>
         <SiteFooter />
+        {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT}`}
+            crossOrigin="anonymous"
+          />
+        )}
       </body>
     </html>
   );
