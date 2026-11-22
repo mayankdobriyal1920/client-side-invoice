@@ -99,7 +99,7 @@
 
 ### A9. UI/UX & accessibility
 - [ ] [P0] Responsive layouts; no horizontal overflow; touch targets ~44px.
-- [ ] [P0] Semantic HTML, keyboard access, visible focus, labels, error text, screen-reader announcements, contrast, reduced motion.
+- [x] [P0] Semantic HTML, keyboard access, visible focus, labels, error text, screen-reader announcements, contrast, reduced motion.
 - [ ] [P0] Accessible dialogs/confirmations.
 
 ### A10. Tests (Phase A)
@@ -132,9 +132,9 @@
 
 - [x] [P1] Core SEO pages (free invoice generator, estimate maker, receipt maker, contractor/handyman/cleaning/landscaping/plumber/electrician/freelancer/consultant/tutor invoice generators).
 - [x] [P1] Utility pages (estimate-template, receipt-template, invoice-number-generator, hourly-invoice-calculator).
-- [ ] [P1] Unique title/meta, one H1, headings, original copy, working tool, FAQs, internal links, canonical, OG metadata, alt text.
-- [ ] [P1] XML sitemap, robots.txt, canonical trailing slash/host, HTTPS, redirects, favicon/social image.
-- [ ] [P1] Avoid indexing app states/activation URLs/query variants/private views; no client data in URLs.
+- [x] [P1] Unique title/meta, one H1, headings, original copy, working tool, FAQs, internal links, canonical, OG metadata, alt text.
+- [x] [P1] XML sitemap, robots.txt, canonical trailing slash/host, HTTPS, redirects, favicon/social image.
+- [x] [P1] Avoid indexing app states/activation URLs/query variants/private views; no client data in URLs.
 - [ ] [P1] Structured data only where qualifies; no fake review/rating schema.
 - [x] [P2] Industry pages with genuinely relevant examples (fictional data), tips, payment terms, FAQ, limitations.
 - [ ] [P2] Search Console setup (owner action).
