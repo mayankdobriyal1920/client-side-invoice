@@ -428,7 +428,7 @@ export default function DocumentEditor({ type }: Props) {
       </div>
 
       {/* Preview */}
-      <div className="glass-card p-6 sticky top-24 self-start">
+      <div className="glass-card p-6 sticky top-24 self-start" aria-live="polite" aria-atomic="true">
         <h2 className="font-semibold text-green-950 mb-4">Preview</h2>
         <DocumentPreview doc={doc} totals={totals!} dateFormat={prefs.dateFormat} />
       </div>

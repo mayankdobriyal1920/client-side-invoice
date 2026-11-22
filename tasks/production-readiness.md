@@ -154,14 +154,14 @@
 
 ## Phase E — Production hardening
 
-- [ ] [P0] Security/privacy tests: inspect network requests, no document data to analytics/ads, logos not uploaded, license key not logged/tracked, malicious strings, malformed backup JSON, oversized image, bundle secret scan.
-- [ ] [P0] Accessibility checks.
+- [x] [P0] Security/privacy tests: inspect network requests, no document data to analytics/ads, logos not uploaded, license key not logged/tracked, malicious strings, malformed backup JSON, oversized image, bundle secret scan.
+- [x] [P0] Accessibility checks.
 - [ ] [P0] Performance checks (lazy-load, code splitting, optimize images, offline handling).
 - [ ] [P0] All routes tested directly + refresh; 404; sitemap/robots; metadata; contact email.
 - [ ] [P0] Gumroad checkout URL + license activation verified.
 - [ ] [P0] Privacy/terms reflect real behavior.
 - [ ] [P0] Vercel deployment verified.
-- [ ] [P0] Final issue report (features, routes, deps, schema/migrations, PDF lib, owner steps, license flow/limits, AdSense steps, privacy/network results, test commands/results, build result, bugs/limits, deploy instructions, verdict).
+- [x] [P0] Final issue report (features, routes, deps, schema/migrations, PDF lib, owner steps, license flow/limits, AdSense steps, privacy/network results, test commands/results, build result, bugs/limits, deploy instructions, verdict).
 
 ---
 
