@@ -1,7 +1,7 @@
 import Link from "next/link";
-import PaddleCheckout from "@/components/pro/PaddleCheckout";
-
 import { pageMetadata } from "@/lib/seo";
+import PricingCheckoutSection from "@/components/pro/PricingCheckoutSection";
+
 export const metadata = pageMetadata({ title: "Pricing", description: "Free vs Pro for EasyBillKit.", path: "/pricing" });
 
 export default function PricingPage() {
@@ -34,14 +34,11 @@ export default function PricingPage() {
             <li>✓ CSV export</li>
             <li>✓ Ad-free experience</li>
           </ul>
-          <div className="mt-6 flex flex-col gap-2">
-            <PaddleCheckout />
-            <Link href="/activate" className="btn-ghost px-5 py-3 rounded-xl font-medium text-center">
-              Already purchased? Restore access
-            </Link>
+          <div className="mt-6">
+            <PricingCheckoutSection />
           </div>
           <p className="text-xs text-muted mt-3">
-            One-time payment, not a subscription. Checkout is processed by Paddle (Merchant of Record). Pro activates on this browser after a successful purchase.
+            One-time payment, not a subscription. Checkout is processed by Paddle (Merchant of Record). Pro activates on this browser after a successful purchase via email verification.
             Local data does not sync across devices.
           </p>
         </div>
