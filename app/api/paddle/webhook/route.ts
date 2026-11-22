@@ -53,8 +53,12 @@ export async function POST(req: NextRequest) {
 
   // Idempotency: check if already processed
   const existing = await db.select().from(webhookEvents).where(eq(webhookEvents.paddleEventId, eventId)).limit(1);
-  if (existing.length > 0) {
+  if (existing.length > 0 && existing[0].processedAt) {
     return NextResponse.json({ received: true, duplicate: true }, { status: 200 });
+  }
+  if (existing.length > 0 && !existing[0].processedAt) {
+    // previous attempt failed; remove stale record and reprocess
+    try { await db.delete(webhookEvents).where(eq(webhookEvents.paddleEventId, eventId)); } catch {}
   }
 
   // Record event first (unique constraint prevents duplicate processing)
@@ -89,7 +93,7 @@ export async function POST(req: NextRequest) {
       }
 
       const customerIdPaddle = tx?.customer_id;
-      let email = tx?.customer?.email ?? null;
+      let email = tx?.customer?.email ?? tx?.billing_details?.email ?? tx?.checkout?.email ?? null;
       if (!email && customerIdPaddle) {
         email = await fetchCustomerEmail(customerIdPaddle);
       }
@@ -196,6 +200,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ received: true }, { status: 200 });
   } catch (err) {
     console.error("Webhook processing error", err);
+    // remove the event record so Paddle retries can reprocess
+    try { await db.delete(webhookEvents).where(eq(webhookEvents.paddleEventId, eventId)); } catch {}
     return NextResponse.json({ error: "Processing failed" }, { status: 500 });
   }
 }
