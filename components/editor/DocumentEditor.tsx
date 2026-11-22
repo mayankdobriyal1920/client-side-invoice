@@ -15,6 +15,7 @@ import {
 import { computeTotals } from "@/lib/calculations/invoice";
 import { formatCents } from "@/lib/calculations/money";
 import { generateDocumentPdf } from "@/lib/pdf/invoicePdf";
+import { required, validateEmail, validateDateOrder, validateDiscountPercent } from "@/lib/validation";
 import { formatDate, todayISO, addDaysISO } from "@/lib/formatting";
 function newId() {
   return Math.random().toString(36).slice(2) + Date.now().toString(36);
@@ -65,6 +66,7 @@ export default function DocumentEditor({ type }: Props) {
   const [prefs, setPrefs] = useState<{ dateFormat: "MM/DD/YYYY" | "DD/MM/YYYY" | "YYYY-MM-DD" }>({ dateFormat: "MM/DD/YYYY" });
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<Record<string,string>>({});
 
   useEffect(() => {
     (async () => {
@@ -134,12 +136,55 @@ export default function DocumentEditor({ type }: Props) {
     update({ businessId: id || undefined, businessSnapshot: p });
   };
 
+  const validateDoc = (): boolean => {
+    const e: Record<string,string> = {};
+    const numErr = required(doc.number, "Document number");
+    if (numErr) e.number = numErr;
+    const dateErr = required(doc.issueDate, "Issue date");
+    if (dateErr) e.issueDate = dateErr;
+    if (doc.dueDate) {
+      const d = validateDateOrder(doc.issueDate, doc.dueDate);
+      if (d) e.dueDate = d;
+    }
+    if (doc.validUntil) {
+      const v = validateDateOrder(doc.issueDate, doc.validUntil);
+      if (v) e.validUntil = v;
+    }
+    if (doc.taxMode !== "manual") {
+      const t = validateDiscountPercent(doc.taxRatePercent ?? 0);
+      if (t) e.taxRate = t;
+    }
+    if (doc.documentDiscountType === "percent") {
+      const dd = validateDiscountPercent(doc.documentDiscountValue ?? 0);
+      if (dd) e.docDiscount = dd;
+    }
+    if ((doc.shippingCents ?? 0) < 0) e.shipping = "Shipping cannot be negative.";
+    if ((doc.amountPaidCents ?? 0) < 0) e.paid = "Paid amount cannot be negative.";
+    doc.lineItems.forEach((li, idx) => {
+      if (!li.description.trim()) e[`line_${li.id}_desc`] = `Line ${idx+1}: description required.`;
+      const qe = (li.quantity <= 0 || !Number.isFinite(li.quantity)) ? "Quantity must be greater than zero." : null;
+      if (qe) e[`line_${li.id}_qty`] = `Line ${idx+1}: ${qe}`;
+      if (li.unitPriceCents < 0) e[`line_${li.id}_price`] = `Line ${idx+1}: price cannot be negative.`;
+      if (li.discountType === "percent" && li.discountValue !== undefined) {
+        const de = validateDiscountPercent(li.discountValue);
+        if (de) e[`line_${li.id}_disc`] = `Line ${idx+1}: ${de}`;
+      }
+      if (li.discountType === "fixed" && (li.discountValue ?? 0) > li.unitPriceCents * li.quantity) {
+        e[`line_${li.id}_disc`] = `Line ${idx+1}: discount exceeds line amount.`;
+      }
+    });
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
   const handleSave = async () => {
+    if (!validateDoc()) {
+      setMessage("Please fix validation errors.");
+      return;
+    }
     setSaving(true);
     setMessage("");
     try {
       await saveDocument(doc);
-      // bump numbering if new? We'll bump on first save by checking; simple: always bump prefs not ideal. Skip auto-bump to avoid duplicates; user can manage. Instead bump here only if not already saved. We'll just save.
       setMessage("Saved.");
     } catch (e) {
       setMessage("Save failed.");
@@ -179,6 +224,7 @@ export default function DocumentEditor({ type }: Props) {
             <label className="text-sm">
               <span className="text-muted">Number</span>
               <input className="glass-input w-full px-3 py-2 mt-1 text-sm" value={doc.number} onChange={(e) => update({ number: e.target.value })} />
+              {errors.number && <p className="text-xs text-danger mt-1">{errors.number}</p>}
             </label>
             <label className="text-sm">
               <span className="text-muted">Title</span>
@@ -187,17 +233,20 @@ export default function DocumentEditor({ type }: Props) {
             <label className="text-sm">
               <span className="text-muted">Issue date</span>
               <input type="date" className="glass-input w-full px-3 py-2 mt-1 text-sm" value={doc.issueDate} onChange={(e) => update({ issueDate: e.target.value })} />
+              {errors.issueDate && <p className="text-xs text-danger mt-1">{errors.issueDate}</p>}
             </label>
             {type === "invoice" && (
               <label className="text-sm">
                 <span className="text-muted">Due date</span>
                 <input type="date" className="glass-input w-full px-3 py-2 mt-1 text-sm" value={doc.dueDate || ""} onChange={(e) => update({ dueDate: e.target.value })} />
+                {errors.dueDate && <p className="text-xs text-danger mt-1">{errors.dueDate}</p>}
               </label>
             )}
             {type === "estimate" && (
               <label className="text-sm">
                 <span className="text-muted">Valid until</span>
                 <input type="date" className="glass-input w-full px-3 py-2 mt-1 text-sm" value={doc.validUntil || ""} onChange={(e) => update({ validUntil: e.target.value })} />
+                {errors.validUntil && <p className="text-xs text-danger mt-1">{errors.validUntil}</p>}
               </label>
             )}
             {type === "receipt" && (
@@ -251,10 +300,13 @@ export default function DocumentEditor({ type }: Props) {
             {doc.lineItems.map((li) => (
               <div key={li.id} className="glass p-3 rounded-xl space-y-2">
                 <input className="glass-input w-full px-3 py-2 text-sm" placeholder="Description" value={li.description} onChange={(e) => updateLine(li.id, { description: e.target.value })} />
+                {errors[`line_${li.id}_desc`] && <p className="text-xs text-danger mt-1">{errors[`line_${li.id}_desc`]}</p>}
                 <div className="grid grid-cols-3 gap-2">
                   <input type="number" step="0.01" className="glass-input px-2 py-1 text-sm" placeholder="Qty" value={li.quantity} onChange={(e) => updateLine(li.id, { quantity: Number(e.target.value) })} />
+                  {errors[`line_${li.id}_qty`] && <p className="text-xs text-danger mt-1 col-span-3">{errors[`line_${li.id}_qty`]}</p>}
                   <input className="glass-input px-2 py-1 text-sm" placeholder="Unit" value={li.unit || ""} onChange={(e) => updateLine(li.id, { unit: e.target.value })} />
                   <input type="number" step="0.01" className="glass-input px-2 py-1 text-sm" placeholder="Unit price" value={(li.unitPriceCents / 100).toFixed(2)} onChange={(e) => updateLine(li.id, { unitPriceCents: Math.round(Number(e.target.value) * 100) })} />
+                  {errors[`line_${li.id}_price`] && <p className="text-xs text-danger mt-1 col-span-3">{errors[`line_${li.id}_price`]}</p>}
                 </div>
                 <div className="flex items-center justify-between text-xs">
                   <label className="flex items-center gap-1 text-muted">
@@ -284,6 +336,7 @@ export default function DocumentEditor({ type }: Props) {
             <label className="text-sm">
               <span className="text-muted">Doc discount value</span>
               <input type="number" step="0.01" className="glass-input w-full px-3 py-2 mt-1 text-sm" value={doc.documentDiscountValue || 0} onChange={(e) => update({ documentDiscountValue: Number(e.target.value) })} />
+              {errors.docDiscount && <p className="text-xs text-danger mt-1">{errors.docDiscount}</p>}
             </label>
             <label className="text-sm">
               <span className="text-muted">Shipping label</span>
@@ -292,6 +345,7 @@ export default function DocumentEditor({ type }: Props) {
             <label className="text-sm">
               <span className="text-muted">Shipping amount</span>
               <input type="number" step="0.01" className="glass-input w-full px-3 py-2 mt-1 text-sm" value={((doc.shippingCents || 0) / 100).toFixed(2)} onChange={(e) => update({ shippingCents: Math.round(Number(e.target.value) * 100) })} />
+              {errors.shipping && <p className="text-xs text-danger mt-1">{errors.shipping}</p>}
             </label>
             <label className="text-sm">
               <span className="text-muted">Tax mode</span>
@@ -309,6 +363,7 @@ export default function DocumentEditor({ type }: Props) {
               <label className="text-sm">
                 <span className="text-muted">Tax rate %</span>
                 <input type="number" step="0.01" className="glass-input w-full px-3 py-2 mt-1 text-sm" value={doc.taxRatePercent || 0} onChange={(e) => update({ taxRatePercent: Number(e.target.value) })} />
+                {errors.taxRate && <p className="text-xs text-danger mt-1">{errors.taxRate}</p>}
               </label>
             )}
             <label className="text-sm flex items-center gap-2 mt-6">
@@ -317,6 +372,7 @@ export default function DocumentEditor({ type }: Props) {
             <label className="text-sm">
               <span className="text-muted">Amount paid</span>
               <input type="number" step="0.01" className="glass-input w-full px-3 py-2 mt-1 text-sm" value={((doc.amountPaidCents || 0) / 100).toFixed(2)} onChange={(e) => update({ amountPaidCents: Math.round(Number(e.target.value) * 100) })} />
+              {errors.paid && <p className="text-xs text-danger mt-1">{errors.paid}</p>}
             </label>
           </div>
         </div>

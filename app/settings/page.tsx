@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { required, validateEmail, validatePhone, validateZip, validateUrl } from "@/lib/validation";
 import type { BusinessProfile, NumberingPrefs, UserPrefs } from "@/types";
 import {
   listBusinessProfiles,
@@ -23,6 +24,7 @@ export default function SettingsPage() {
   const [np, setNp] = useState<NumberingPrefs | null>(null);
   const [up, setUp] = useState<UserPrefs | null>(null);
   const [msg, setMsg] = useState("");
+  const [errors, setErrors] = useState<Record<string,string>>({});
 
   const reload = async () => {
     setProfiles(await listBusinessProfiles());
@@ -31,10 +33,28 @@ export default function SettingsPage() {
   };
   useEffect(() => { reload(); }, []);
 
+  const validateProfile = (): boolean => {
+    if (!editing) return false;
+    const e: Record<string,string> = {};
+    const r = required(editing.name, "Business name");
+    if (r) e.name = r;
+    const em = validateEmail(editing.email);
+    if (em) e.email = em;
+    const ph = validatePhone(editing.phone);
+    if (ph) e.phone = ph;
+    const z = validateZip(editing.address?.zip);
+    if (z) e.zip = z;
+    const w = validateUrl(editing.website);
+    if (w) e.website = w;
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
   const saveProfile = async () => {
-    if (!editing || !editing.name.trim()) return;
+    if (!editing) return;
+    if (!validateProfile()) return;
     await saveBusinessProfile(editing);
     setEditing(null);
+    setErrors({});
     reload();
     setMsg("Business profile saved.");
   };
@@ -55,6 +75,14 @@ export default function SettingsPage() {
 
   const saveNumbering = async () => {
     if (!np) return;
+    if (!np.invoicePrefix.trim() || !np.estimatePrefix.trim() || !np.receiptPrefix.trim()) {
+      setMsg("Prefixes cannot be empty.");
+      return;
+    }
+    if (np.nextInvoice < 1 || np.nextEstimate < 1 || np.nextReceipt < 1) {
+      setMsg("Next numbers must be at least 1.");
+      return;
+    }
     await setNumberingPrefs(np);
     setMsg("Numbering preferences saved.");
   };
@@ -105,18 +133,23 @@ export default function SettingsPage() {
         {editing && (
           <div className="space-y-3 mb-4">
             <input className="glass-input w-full px-3 py-2 text-sm" placeholder="Business / trading name" value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value })} />
+            {errors.name && <p className="text-xs text-danger mt-1">{errors.name}</p>}
             <input className="glass-input w-full px-3 py-2 text-sm" placeholder="Contact person" value={editing.contactPerson || ""} onChange={(e) => setEditing({ ...editing, contactPerson: e.target.value })} />
             <div className="grid grid-cols-2 gap-2">
               <input className="glass-input px-3 py-2 text-sm" placeholder="Email" value={editing.email || ""} onChange={(e) => setEditing({ ...editing, email: e.target.value })} />
+              {errors.email && <p className="text-xs text-danger mt-1">{errors.email}</p>}
               <input className="glass-input px-3 py-2 text-sm" placeholder="Phone" value={editing.phone || ""} onChange={(e) => setEditing({ ...editing, phone: e.target.value })} />
+              {errors.phone && <p className="text-xs text-danger mt-1">{errors.phone}</p>}
             </div>
             <input className="glass-input w-full px-3 py-2 text-sm" placeholder="Address line 1" value={editing.address?.line1 || ""} onChange={(e) => setEditing({ ...editing, address: { ...(editing.address || {}), line1: e.target.value } })} />
             <div className="grid grid-cols-3 gap-2">
               <input className="glass-input px-3 py-2 text-sm" placeholder="City" value={editing.address?.city || ""} onChange={(e) => setEditing({ ...editing, address: { ...(editing.address || {}), city: e.target.value } })} />
               <input className="glass-input px-3 py-2 text-sm" placeholder="State" value={editing.address?.state || ""} onChange={(e) => setEditing({ ...editing, address: { ...(editing.address || {}), state: e.target.value } })} />
               <input className="glass-input px-3 py-2 text-sm" placeholder="ZIP" value={editing.address?.zip || ""} onChange={(e) => setEditing({ ...editing, address: { ...(editing.address || {}), zip: e.target.value } })} />
+              {errors.zip && <p className="text-xs text-danger mt-1">{errors.zip}</p>}
             </div>
             <input className="glass-input w-full px-3 py-2 text-sm" placeholder="Website" value={editing.website || ""} onChange={(e) => setEditing({ ...editing, website: e.target.value })} />
+            {errors.website && <p className="text-xs text-danger mt-1">{errors.website}</p>}
             <input className="glass-input w-full px-3 py-2 text-sm" placeholder="Tax ID / EIN (optional)" value={editing.taxId || ""} onChange={(e) => setEditing({ ...editing, taxId: e.target.value })} />
             <div>
               <label className="text-xs text-muted">Logo (PNG/JPEG/WebP, max 2MB)</label>

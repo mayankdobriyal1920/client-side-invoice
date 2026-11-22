@@ -35,3 +35,50 @@ export function validateDiscountPercent(p: number): string | null {
   if (p < 0 || p > 100) return "Discount percent must be 0–100.";
   return null;
 }
+
+export function required(value: string | undefined | null, label = "This field"): string | null {
+  if (value === undefined || value === null || String(value).trim() === "") {
+    return `${label} is required.`;
+  }
+  return null;
+}
+
+export function validateEmail(value: string | undefined): string | null {
+  if (!value || value.trim() === "") return null; // optional
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!re.test(value.trim())) return "Enter a valid email address.";
+  return null;
+}
+
+export function validateUrl(value: string | undefined): string | null {
+  if (!value || value.trim() === "") return null;
+  try {
+    const u = new URL(value.trim());
+    if (u.protocol !== "http:" && u.protocol !== "https:") return "URL must start with http:// or https://";
+    return null;
+  } catch {
+    return "Enter a valid URL.";
+  }
+}
+
+export function validateDateOrder(issue: string, other: string | undefined): string | null {
+  if (!other) return null;
+  const a = new Date(issue + "T00:00:00");
+  const b = new Date(other + "T00:00:00");
+  if (isNaN(a.getTime()) || isNaN(b.getTime())) return null;
+  if (b < a) return "Date cannot be earlier than issue date.";
+  return null;
+}
+
+export function validateZip(value: string | undefined): string | null {
+  if (!value || value.trim() === "") return null;
+  if (!/^\d{5}(-\d{4})?$/.test(value.trim())) return "ZIP must be 5 digits (or ZIP+4).";
+  return null;
+}
+
+export function validatePhone(value: string | undefined): string | null {
+  if (!value || value.trim() === "") return null;
+  const digits = value.replace(/\D/g, "");
+  if (digits.length < 7 || digits.length > 15) return "Enter a valid phone number.";
+  return null;
+}

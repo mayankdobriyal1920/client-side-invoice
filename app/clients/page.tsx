@@ -3,22 +3,40 @@
 import { useEffect, useState } from "react";
 import type { Client } from "@/types";
 import { listClients, saveClient, deleteClient } from "@/lib/storage/db";
+import { required, validateEmail, validatePhone, validateZip } from "@/lib/validation";
 function newId() { return Math.random().toString(36).slice(2) + Date.now().toString(36); }
 
 export default function ClientsPage() {
   const [clients, setClients] = useState<Client[]>([]);
   const [editing, setEditing] = useState<Client | null>(null);
   const [search, setSearch] = useState("");
+  const [errors, setErrors] = useState<Record<string,string>>({});
 
   const reload = async () => setClients(await listClients());
   useEffect(() => { reload(); }, []);
 
   const startNew = () => setEditing({ id: newId(), name: "", createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() });
+  const validateEditing = (): boolean => {
+    if (!editing) return false;
+    const e: Record<string,string> = {};
+    const r = required(editing.name, "Client name");
+    if (r) e.name = r;
+    const em = validateEmail(editing.email);
+    if (em) e.email = em;
+    const ph = validatePhone(editing.phone);
+    if (ph) e.phone = ph;
+    const z = validateZip(editing.address?.zip);
+    if (z) e.zip = z;
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
   const save = async () => {
-    if (!editing || !editing.name.trim()) return;
+    if (!editing) return;
+    if (!validateEditing()) return;
     editing.updatedAt = new Date().toISOString();
     await saveClient(editing);
     setEditing(null);
+    setErrors({});
     reload();
   };
   const remove = async (id: string) => {
@@ -39,14 +57,18 @@ export default function ClientsPage() {
       {editing && (
         <div className="glass-card p-5 mb-4 space-y-3">
           <input className="glass-input w-full px-3 py-2 text-sm" placeholder="Client / company name" value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value })} />
+          {errors.name && <p className="text-xs text-danger mt-1">{errors.name}</p>}
           <input className="glass-input w-full px-3 py-2 text-sm" placeholder="Contact name" value={editing.contactName || ""} onChange={(e) => setEditing({ ...editing, contactName: e.target.value })} />
           <input className="glass-input w-full px-3 py-2 text-sm" placeholder="Email" value={editing.email || ""} onChange={(e) => setEditing({ ...editing, email: e.target.value })} />
+          {errors.email && <p className="text-xs text-danger mt-1">{errors.email}</p>}
           <input className="glass-input w-full px-3 py-2 text-sm" placeholder="Phone" value={editing.phone || ""} onChange={(e) => setEditing({ ...editing, phone: e.target.value })} />
+          {errors.phone && <p className="text-xs text-danger mt-1">{errors.phone}</p>}
           <input className="glass-input w-full px-3 py-2 text-sm" placeholder="Address line 1" value={editing.address?.line1 || ""} onChange={(e) => setEditing({ ...editing, address: { ...(editing.address || {}), line1: e.target.value } })} />
           <div className="grid grid-cols-3 gap-2">
             <input className="glass-input px-3 py-2 text-sm" placeholder="City" value={editing.address?.city || ""} onChange={(e) => setEditing({ ...editing, address: { ...(editing.address || {}), city: e.target.value } })} />
             <input className="glass-input px-3 py-2 text-sm" placeholder="State" value={editing.address?.state || ""} onChange={(e) => setEditing({ ...editing, address: { ...(editing.address || {}), state: e.target.value } })} />
             <input className="glass-input px-3 py-2 text-sm" placeholder="ZIP" value={editing.address?.zip || ""} onChange={(e) => setEditing({ ...editing, address: { ...(editing.address || {}), zip: e.target.value } })} />
+            {errors.zip && <p className="text-xs text-danger mt-1 col-span-3">{errors.zip}</p>}
           </div>
           <textarea className="glass-input w-full px-3 py-2 text-sm" placeholder="Notes" value={editing.notes || ""} onChange={(e) => setEditing({ ...editing, notes: e.target.value })} />
           <div className="flex gap-2">
