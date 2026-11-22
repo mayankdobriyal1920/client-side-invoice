@@ -10,7 +10,7 @@ export default function PrivacyPolicyPage() {
         <p><strong className="text-text">Analytics:</strong> We may collect page-level, aggregate product events (e.g., page views, document type selected, PDF export completed). We never collect client names, emails, addresses, invoice numbers, line items, amounts, tax IDs, or license keys.</p>
         <p><strong className="text-text">Advertising:</strong> If ads are enabled, third-party advertising technologies (such as Google AdSense) may collect data as described in their policies. Ads are not shown in editors, checkout, activation, or PDFs.</p>
         <p><strong className="text-text">Deletion:</strong> You can delete records in the app. Clearing browser data may remove all records. There is no automatic cloud backup or sync.</p>
-        <p><strong className="text-text">Contact:</strong> <a href="mailto:hello@flipfee.online" className="text-green-700">hello@flipfee.online</a></p>
+        <p><strong className="text-text">Contact:</strong> <a href="mailto:hello@easybillkit.online" className="text-green-700">hello@easybillkit.online</a></p>
       </div>
     </section>
   );

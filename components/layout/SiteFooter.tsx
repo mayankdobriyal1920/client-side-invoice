@@ -26,12 +26,13 @@ export function SiteFooter() {
               <Link href="/contact" className="text-muted hover:text-text">Contact</Link>
               <Link href="/privacy-policy" className="text-muted hover:text-text">Privacy</Link>
               <Link href="/terms" className="text-muted hover:text-text">Terms</Link>
+              <Link href="/refund-policy" className="text-muted hover:text-text">Refunds</Link>
             </div>
           </div>
         </div>
         <div className="mt-6 pt-4 border-t border-white/60 flex flex-col md:flex-row gap-2 justify-between text-xs text-muted">
           <p>© {new Date().getFullYear()} SimpleInvoice Studio. Browser-local data.</p>
-          <a href="mailto:hello@flipfee.online" className="hover:text-text">hello@flipfee.online</a>
+          <a href="mailto:hello@easybillkit.online" className="hover:text-text">hello@easybillkit.online</a>
         </div>
       </div>
     </footer>

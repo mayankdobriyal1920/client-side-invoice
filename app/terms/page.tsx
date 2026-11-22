@@ -10,7 +10,7 @@ export default function TermsPage() {
         <p>Data is stored locally in your browser and may be lost if browser data is cleared or the device is lost. There is no automatic cloud backup or sync.</p>
         <p>Payments and licensing are handled by the stated payment provider (Gumroad). Refunds are subject to that provider&apos;s terms.</p>
         <p>Pro license activation is best-effort client-side licensing; frontend restrictions are not strong DRM. A technically capable user may bypass them; a backend would be required for stronger enforcement.</p>
-        <p>Contact: <a href="mailto:hello@flipfee.online" className="text-green-700">hello@flipfee.online</a></p>
+        <p>Contact: <a href="mailto:hello@easybillkit.online" className="text-green-700">hello@easybillkit.online</a></p>
       </div>
     </section>
   );

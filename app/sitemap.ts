@@ -15,6 +15,7 @@ const routes = [
   "/how-it-works",
   "/privacy-policy",
   "/terms",
+  "/refund-policy",
   "/about",
   "/contact",
 ];

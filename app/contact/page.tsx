@@ -6,7 +6,7 @@ export default function ContactPage() {
       <h1 className="text-2xl font-bold text-green-950">Contact</h1>
       <div className="glass-card p-5 space-y-3 text-sm text-muted">
         <p>For support, feedback, or corrections, email us:</p>
-        <a href="mailto:hello@flipfee.online" className="text-green-700 font-medium">hello@flipfee.online</a>
+        <a href="mailto:hello@easybillkit.online" className="text-green-700 font-medium">hello@easybillkit.online</a>
       </div>
     </section>
   );
