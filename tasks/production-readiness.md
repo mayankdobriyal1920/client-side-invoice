@@ -103,12 +103,12 @@
 - [ ] [P0] Accessible dialogs/confirmations.
 
 ### A10. Tests (Phase A)
-- [ ] [P0] Unit tests for calculations and numbering and due-date status.
-- [ ] [P0] Integration: create invoice → preview → save → reopen → export PDF.
-- [ ] [P0] Integration: client → select → populate invoice.
-- [ ] [P0] Integration: estimate → accepted → convert to invoice.
-- [ ] [P0] Integration: invoice → partial payment → receipt.
-- [ ] [P0] Integration: export backup → clear data → import → verify.
+- [x] [P0] Unit tests for calculations and numbering and due-date status.
+- [x] [P0] Integration: create invoice → preview → save → reopen → export PDF.
+- [x] [P0] Integration: client → select → populate invoice.
+- [x] [P0] Integration: estimate → accepted → convert to invoice.
+- [x] [P0] Integration: invoice → partial payment → receipt.
+- [x] [P0] Integration: export backup → clear data → import → verify.
 - [~] [P0] Browser tests: Chrome/Safari/Firefox desktop, Mobile Safari/Chrome (PDF download, print, logo upload, IndexedDB, refresh, mobile keyboard, no overflow).
 
 ---
