@@ -71,10 +71,10 @@
 - [x] [P0] Document metadata: number, issue date, due/valid-until, PO/ref, currency, status, title.
 - [x] [P0] Local sequential numbering (INV/EST/REC prefixes), editable prefix/next number, avoid duplicates locally.
 - [x] [P0] Totals/adjustments UI (subtotal, discounts, shipping, tax, deposit/paid, balance, total).
-- [ ] [P0] Unsaved-changes warning.
+- [x] [P0] Unsaved-changes warning.
 - [x] [P0] Save to IndexedDB; reopen/edit.
 - [x] [P0] Duplicate document.
-- [ ] [P1] Reorder line items if practical.
+- [x] [P1] Reorder line items if practical.
 
 ### A6. Estimate & receipt specifics
 - [x] [P0] Estimate: scope of work, assumptions, exclusions, terms, visual acceptance area (no legal e-signature claim).

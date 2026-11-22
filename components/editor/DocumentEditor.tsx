@@ -67,6 +67,7 @@ export default function DocumentEditor({ type }: Props) {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<Record<string,string>>({});
+  const [dirty, setDirty] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -92,9 +93,21 @@ export default function DocumentEditor({ type }: Props) {
 
   const totals = useMemo(() => (doc ? computeTotals(doc) : null), [doc]);
 
+  // unsaved changes warning
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => {
+      if (dirty) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", handler);
+    return () => window.removeEventListener("beforeunload", handler);
+  }, [dirty]);
+
   if (!doc) return <div className="text-muted">Loading editor…</div>;
 
-  const update = (patch: Partial<BaseDocument>) => setDoc((d) => (d ? { ...d, ...patch, updatedAt: new Date().toISOString() } : d));
+  const update = (patch: Partial<BaseDocument>) => { setDirty(true); setDoc((d) => (d ? { ...d, ...patch, updatedAt: new Date().toISOString() } : d)); };
 
   const addLine = () => {
     const li: LineItem = { id: newId(), description: "", quantity: 1, unit: "item", unitPriceCents: 0, discountType: "none", discountValue: 0, taxable: true };
@@ -107,6 +120,17 @@ export default function DocumentEditor({ type }: Props) {
 
   const removeLine = (id: string) => {
     update({ lineItems: doc.lineItems.filter((l) => l.id !== id) });
+  };
+
+  const moveLine = (id: string, dir: -1 | 1) => {
+    const idx = doc.lineItems.findIndex((l) => l.id === id);
+    if (idx < 0) return;
+    const newIdx = idx + dir;
+    if (newIdx < 0 || newIdx >= doc.lineItems.length) return;
+    const next = [...doc.lineItems];
+    const [item] = next.splice(idx, 1);
+    next.splice(newIdx, 0, item);
+    update({ lineItems: next });
   };
 
   const duplicateLine = (id: string) => {
@@ -185,6 +209,7 @@ export default function DocumentEditor({ type }: Props) {
     setMessage("");
     try {
       await saveDocument(doc);
+      setDirty(false);
       setMessage("Saved.");
     } catch (e) {
       setMessage("Save failed.");
@@ -313,6 +338,8 @@ export default function DocumentEditor({ type }: Props) {
                     <input type="checkbox" checked={li.taxable !== false} onChange={(e) => updateLine(li.id, { taxable: e.target.checked })} /> Taxable
                   </label>
                   <div className="flex gap-2">
+                    <button type="button" onClick={() => moveLine(li.id, -1)} className="text-muted hover:underline">↑</button>
+                    <button type="button" onClick={() => moveLine(li.id, 1)} className="text-muted hover:underline">↓</button>
                     <button type="button" onClick={() => duplicateLine(li.id)} className="text-green-700 hover:underline">Duplicate</button>
                     <button type="button" onClick={() => removeLine(li.id)} className="text-danger hover:underline">Remove</button>
                   </div>
