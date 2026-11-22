@@ -1,0 +1,1 @@
+// Test setup (jsdom). No jest-dom matchers to avoid peer-dep conflicts.
