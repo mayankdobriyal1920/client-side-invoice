@@ -1,6 +1,7 @@
 import DocumentEditor from "@/components/editor/DocumentEditor";
 
-export const metadata = { title: "Free Estimate Maker", description: "Create and download a professional estimate PDF in your browser." };
+import { pageMetadata } from "@/lib/seo";
+export const metadata = pageMetadata({ title: "Free Estimate Maker", description: "Create and download a professional estimate PDF in your browser.", path: "/estimate-maker" });
 
 export default function EstimateMakerPage() {
   return (

@@ -1,7 +1,8 @@
 
 import DocumentEditor from "@/components/editor/DocumentEditor";
 
-export const metadata = { title: "Free Invoice Generator", description: "Create and download a professional invoice PDF in your browser." };
+import { pageMetadata } from "@/lib/seo";
+export const metadata = pageMetadata({ title: "Free Invoice Generator", description: "Create and download a professional invoice PDF in your browser.", path: "/invoice-generator" });
 
 export default function InvoiceGeneratorPage() {
   return (

@@ -1,5 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({
+  title: "EasyBillKit — Free Invoice, Estimate & Receipt Maker",
+  description: "Create professional invoices, estimates, and receipts in your browser. No account required. Export a clean PDF in seconds.",
+  path: "/",
+});
 
 const features = [
   { title: "No account required", desc: "Start creating invoices instantly. Nothing to sign up for." },

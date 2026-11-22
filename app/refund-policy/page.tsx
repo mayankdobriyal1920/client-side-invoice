@@ -1,4 +1,5 @@
-export const metadata = { title: "Refund Policy", description: "Refund policy for EasyBillKit Pro." };
+import { pageMetadata } from "@/lib/seo";
+export const metadata = pageMetadata({ title: "Refund Policy", description: "Refund policy for EasyBillKit Pro.", path: "/refund-policy" });
 
 export default function RefundPolicyPage() {
   return (

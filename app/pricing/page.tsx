@@ -1,6 +1,8 @@
 import Link from "next/link";
+import PaddleCheckout from "@/components/pro/PaddleCheckout";
 
-export const metadata = { title: "Pricing", description: "Free vs Pro for SimpleInvoice Studio." };
+import { pageMetadata } from "@/lib/seo";
+export const metadata = pageMetadata({ title: "Pricing", description: "Free vs Pro for EasyBillKit.", path: "/pricing" });
 
 export default function PricingPage() {
   return (
@@ -33,16 +35,14 @@ export default function PricingPage() {
             <li>✓ Ad-free experience</li>
           </ul>
           <div className="mt-6 flex flex-col gap-2">
-            <a href={process.env.NEXT_PUBLIC_GUMROAD_PRODUCT_URL || "#"} className="btn-primary px-5 py-3 rounded-xl font-medium text-center">
-              Buy Pro on Gumroad
-            </a>
+            <PaddleCheckout />
             <Link href="/activate" className="btn-ghost px-5 py-3 rounded-xl font-medium text-center">
-              I already purchased — Activate
+              Already purchased? Restore access
             </Link>
           </div>
           <p className="text-xs text-muted mt-3">
-            One-time payment, not a subscription. Pro activation may require internet access. Local data does not sync across devices.
-            &quot;Lifetime&quot; means access to the current product and updates under the published terms.
+            One-time payment, not a subscription. Checkout is processed by Paddle (Merchant of Record). Pro activates on this browser after a successful purchase.
+            Local data does not sync across devices.
           </p>
         </div>
       </div>

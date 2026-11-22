@@ -1,4 +1,5 @@
-export const metadata = { title: "About", description: "About SimpleInvoice Studio." };
+import { pageMetadata } from "@/lib/seo";
+export const metadata = pageMetadata({ title: "About", description: "About EasyBillKit.", path: "/about" });
 
 export default function AboutPage() {
   return (

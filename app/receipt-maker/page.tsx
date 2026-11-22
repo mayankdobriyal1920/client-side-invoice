@@ -1,6 +1,7 @@
 import DocumentEditor from "@/components/editor/DocumentEditor";
 
-export const metadata = { title: "Receipt Maker", description: "Create and download a receipt PDF in your browser." };
+import { pageMetadata } from "@/lib/seo";
+export const metadata = pageMetadata({ title: "Receipt Maker", description: "Create and download a receipt PDF in your browser.", path: "/receipt-maker" });
 
 export default function ReceiptMakerPage() {
   return (

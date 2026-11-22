@@ -1,4 +1,5 @@
-export const metadata = { title: "How It Works", description: "How SimpleInvoice Studio calculates and stores data." };
+import { pageMetadata } from "@/lib/seo";
+export const metadata = pageMetadata({ title: "How It Works", description: "How EasyBillKit calculates and stores data.", path: "/how-it-works" });
 
 export default function HowItWorksPage() {
   return (
