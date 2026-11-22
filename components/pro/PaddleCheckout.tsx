@@ -13,6 +13,7 @@ export default function PaddleCheckout() {
   const router = useRouter();
   const [ready, setReady] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [discountCode, setDiscountCode] = useState("");
   const clientToken = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN;
   const priceId = process.env.NEXT_PUBLIC_PADDLE_PRICE_ID;
   const env = process.env.NEXT_PUBLIC_PADDLE_ENV || "sandbox";
@@ -45,13 +46,13 @@ export default function PaddleCheckout() {
     setLoading(true);
     window.Paddle.Checkout.open({
       items: [{ priceId, quantity: 1 }],
+      discountCode: discountCode.trim() || undefined,
       settings: {
         displayMode: "overlay",
         theme: "light",
       },
       customData: { source: "easybillkit" },
     });
-    // Paddle.js emits events via Paddle.Checkout; we listen via eventCallback if available
     if (window.Paddle?.Checkout?.setEventCallback) {
       window.Paddle.Checkout.setEventCallback((data: any) => {
         if (data?.name === "checkout.completed") {
@@ -66,8 +67,19 @@ export default function PaddleCheckout() {
   };
 
   return (
-    <button onClick={openCheckout} disabled={!ready || loading} className="btn-primary px-5 py-3 rounded-xl font-medium disabled:opacity-60">
-      {loading ? "Processing…" : ready ? "Buy Pro with Paddle" : "Loading checkout…"}
-    </button>
+    <div className="space-y-3">
+      <div>
+        <label className="text-xs text-muted block mb-1">Discount code (optional)</label>
+        <input
+          className="glass-input w-full px-3 py-2 text-sm"
+          placeholder="Enter discount code"
+          value={discountCode}
+          onChange={(e) => setDiscountCode(e.target.value)}
+        />
+      </div>
+      <button onClick={openCheckout} disabled={!ready || loading} className="btn-primary px-5 py-3 rounded-xl font-medium disabled:opacity-60 w-full">
+        {loading ? "Processing…" : ready ? "Buy Pro with Paddle" : "Loading checkout…"}
+      </button>
+    </div>
   );
 }
