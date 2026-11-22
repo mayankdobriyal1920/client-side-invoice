@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   description:
     "Create professional invoices, estimates, and receipts in your browser. No account required. Export a clean PDF in seconds.",
   metadataBase: new URL("https://flipfee.online"),
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

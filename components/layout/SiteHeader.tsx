@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const nav = [
@@ -13,7 +14,10 @@ export function SiteHeader() {
   return (
     <header className="border-b border-border bg-surface-strong sticky top-0 z-40">
       <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link href="/" className="font-semibold text-green-700">SimpleInvoice Studio</Link>
+        <Link href="/" className="flex items-center gap-2 font-semibold text-green-700">
+          <Image src="/logo.png" alt="SimpleInvoice Studio logo" width={28} height={28} className="rounded-md" />
+          <span>SimpleInvoice Studio</span>
+        </Link>
         <nav className="hidden md:flex gap-4 text-sm">
           {nav.map((n) => (
             <Link key={n.href} href={n.href} className="text-muted hover:text-text">
