@@ -170,5 +170,5 @@
 - [x] [P0] Legal pages: privacy policy accurate (local storage, Gumroad data, analytics, ads, deletion, no sync), terms with disclaimers, about, contact with mailto:hello@flipfee.online.
 - [x] [P0] Contact email hello@flipfee.online on contact/footer/privacy/terms.
 - [x] [P0] No fake contact form.
-- [ ] [P1] Error handling & recovery; no silent data loss.
-- [ ] [P1] Offline/network error handling; don't promise offline until tested.
+- [x] [P1] Error handling & recovery; no silent data loss.
+- [x] [P1] Offline/network error handling; don't promise offline until tested.

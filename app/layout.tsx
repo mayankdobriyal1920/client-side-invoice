@@ -4,6 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import VitalsReporter from "@/components/layout/VitalsReporter";
+import OfflineBanner from "@/components/layout/OfflineBanner";
 
 export const metadata: Metadata = {
   title: "SimpleInvoice Studio — Free Invoice, Estimate & Receipt Maker",
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="fixed top-1/3 -right-32 w-[28rem] h-[28rem] rounded-full bg-green-700/20 blur-3xl animate-blob-float -z-10" style={{ animationDelay: "6s" }} aria-hidden />
         <div className="fixed bottom-0 left-1/3 w-[32rem] h-[32rem] rounded-full bg-green-100/60 blur-3xl animate-blob-float -z-10" style={{ animationDelay: "12s" }} aria-hidden />
         <VitalsReporter />
+        <OfflineBanner />
         <SiteHeader />
         <main id="main-content" className="flex-1 relative">{children}</main>
         <SiteFooter />
