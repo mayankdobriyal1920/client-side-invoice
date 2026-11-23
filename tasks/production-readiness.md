@@ -95,12 +95,12 @@
 - [x] [P0] Include business/client details, totals, logo; selectable text.
 - [x] [P0] Sanitized file names (Invoice-INV-0001.pdf etc.).
 - [x] [P0] Print stylesheet: hide nav/controls/ads; print only document; no clipped margins.
-- [ ] [P0] PDF quality tests (empty optionals, long names/descriptions, 1/10/25/50 items, multi-page, logo present/absent, large totals, discounts/taxes, partial payment, invalid input rejection, mobile download).
+- [x] [P0] PDF quality tests (empty optionals, long names/descriptions, 1/10/25/50 items, multi-page, logo present/absent, large totals, discounts/taxes, partial payment, invalid input rejection, mobile download).
 
 ### A9. UI/UX & accessibility
-- [ ] [P0] Responsive layouts; no horizontal overflow; touch targets ~44px.
+- [x] [P0] Responsive layouts; no horizontal overflow; touch targets ~44px.
 - [x] [P0] Semantic HTML, keyboard access, visible focus, labels, error text, screen-reader announcements, contrast, reduced motion.
-- [ ] [P0] Accessible dialogs/confirmations.
+- [x] [P0] Accessible dialogs/confirmations.
 
 ### A10. Tests (Phase A)
 - [x] [P0] Unit tests for calculations and numbering and due-date status.
@@ -116,9 +116,9 @@
 ## Phase B — Pro and payments
 
 - [x] [P1] Pricing page (free vs Pro, one-time, inclusions, refund/license/device limitations, no account required, local data no sync, activation may need internet).
-- [x] [P1] Gumroad product setup (owner action) + hosted checkout link/button.
+- [x] [P1] Paddle product setup (owner action) + hosted checkout link/button.
 - [x] [P1] License activation page (key field, activate, loading, success/failure, help link, privacy).
-- [x] [P1] License verification via official Gumroad mechanism (no secrets in frontend).
+- [x] [P1] License verification via official Paddle mechanism (no secrets in frontend).
 - [x] [P1] Handle invalid/revoked/exhausted/network/rate-limit/outage; never log/track keys.
 - [x] [P1] Grace period for previously verified entitlement during provider outage (disclosed).
 - [x] [P1] Re-verify/restore action.
@@ -156,10 +156,10 @@
 
 - [x] [P0] Security/privacy tests: inspect network requests, no document data to analytics/ads, logos not uploaded, license key not logged/tracked, malicious strings, malformed backup JSON, oversized image, bundle secret scan.
 - [x] [P0] Accessibility checks.
-- [ ] [P0] Performance checks (lazy-load, code splitting, optimize images, offline handling).
-- [ ] [P0] All routes tested directly + refresh; 404; sitemap/robots; metadata; contact email.
-- [ ] [P0] Gumroad checkout URL + license activation verified.
-- [ ] [P0] Privacy/terms reflect real behavior.
+- [x] [P0] Performance checks (lazy-load, code splitting, optimize images, offline handling).
+- [x] [P0] All routes tested directly + refresh; 404; sitemap/robots; metadata; contact email.
+- [ ] [P0] Paddle checkout URL + license activation verified.
+- [x] [P0] Privacy/terms reflect real behavior.
 - [ ] [P0] Vercel deployment verified.
 - [x] [P0] Final issue report (features, routes, deps, schema/migrations, PDF lib, owner steps, license flow/limits, AdSense steps, privacy/network results, test commands/results, build result, bugs/limits, deploy instructions, verdict).
 
@@ -168,7 +168,7 @@
 ## Cross-cutting
 
 - [x] [P0] Legal pages: privacy policy accurate (local storage, Gumroad data, analytics, ads, deletion, no sync), terms with disclaimers, about, contact with mailto:hello@flipfee.online.
-- [x] [P0] Contact email hello@flipfee.online on contact/footer/privacy/terms.
+- [x] [P0] Contact email hello@easybillkit.online on contact/footer/privacy/terms.
 - [x] [P0] No fake contact form.
 - [x] [P1] Error handling & recovery; no silent data loss.
 - [x] [P1] Offline/network error handling; don't promise offline until tested.
