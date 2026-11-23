@@ -8,7 +8,6 @@ export interface PaddleWebhookVerification {
 
 export function verifyPaddleSignature(rawBody: string, signatureHeader: string | null, secret: string): PaddleWebhookVerification {
   if (!signatureHeader) return { valid: false };
-  const trimmedSecret = secret.trim();
   const parts = signatureHeader.split(";").map((p) => p.trim());
   const tsPart = parts.find((p) => p.startsWith("ts="));
   const h1Part = parts.find((p) => p.startsWith("h1="));
@@ -16,7 +15,7 @@ export function verifyPaddleSignature(rawBody: string, signatureHeader: string |
   const ts = tsPart.slice(3);
   const h1 = h1Part.slice(3);
   const signedPayload = `${ts}:${rawBody}`;
-  const expected = crypto.createHmac("sha256", trimmedSecret).update(signedPayload).digest("hex");
+  const expected = crypto.createHmac("sha256", secret).update(signedPayload).digest("hex");
   // timing-safe compare
   const a = Buffer.from(expected, "hex");
   const b = Buffer.from(h1, "hex");
