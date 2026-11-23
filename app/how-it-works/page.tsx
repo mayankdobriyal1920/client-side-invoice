@@ -6,8 +6,7 @@ export const metadata = pageMetadata({ title: "How It Works", description: "How 
 export default function HowItWorksPage() {
   return (
     <>
-      <PageHeader showBack={true} />
-      <h1 className="text-2xl font-bold text-green-950 mb-4">How It Works</h1>
+      <PageHeader showBack={true} title="How It Works" subtitle="How EasyBillKit calculates and stores data." />
       <section className="max-w-3xl mx-auto px-4 py-6 space-y-4">
         <div className="glass-card p-5 space-y-3 text-sm text-muted">
           <p><strong className="text-text">Calculations:</strong> All line totals, discounts, taxes, and balances are computed in your browser using decimal-safe (cents) arithmetic. Tax is user-configured; we do not fetch or infer any tax rate.</p>

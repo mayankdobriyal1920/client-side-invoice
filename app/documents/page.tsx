@@ -117,7 +117,6 @@ export default function DocumentsPage() {
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-6">
-      <h1 className="text-2xl font-bold text-green-950 mb-4">Documents</h1>
       <div className="glass-card p-4 mb-4 flex flex-wrap gap-3">
         <input className="glass-input px-3 py-2 text-sm flex-1 min-w-[160px]" placeholder="Search number, client, title…" value={search} onChange={(e) => setSearch(e.target.value)} />
         <select className="glass-input px-3 py-2 text-sm" value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>

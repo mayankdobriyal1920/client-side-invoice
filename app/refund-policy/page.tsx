@@ -6,7 +6,7 @@ export const metadata = pageMetadata({ title: "Refund Policy", description: "Ref
 export default function RefundPolicyPage() {
   return (
     <>
-      <PageHeader showBack={true} />
+      <PageHeader showBack={true} title="Refund Policy" subtitle="Refund policy for EasyBillKit Pro." />
       <section className="max-w-3xl mx-auto px-4 py-6 space-y-4">
         <h1 className="text-2xl font-bold text-green-950">Refund Policy</h1>
         <p className="text-xs text-muted">Last Updated: November 22, 2026</p>

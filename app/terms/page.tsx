@@ -6,8 +6,7 @@ export const metadata = pageMetadata({ title: "Terms", description: "Terms of us
 export default function TermsPage() {
   return (
     <>
-      <PageHeader showBack={true} />
-      <h1 className="text-2xl font-bold text-green-950 mb-4">Terms</h1>
+      <PageHeader showBack={true} title="Terms" subtitle="Terms of use for EasyBillKit." />
       <section className="max-w-3xl mx-auto px-4 py-6 space-y-4">
         <div className="glass-card p-5 space-y-3 text-sm text-muted">
           <p>EasyBillKit provides document-generation functionality only. It is not accounting, tax, or legal advice. You are responsible for the accuracy of information, tax rates, and document compliance.</p>

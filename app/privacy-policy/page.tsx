@@ -6,8 +6,7 @@ export const metadata = pageMetadata({ title: "Privacy Policy", description: "Pr
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <PageHeader showBack={true} />
-      <h1 className="text-2xl font-bold text-green-950 mb-4">Privacy Policy</h1>
+      <PageHeader showBack={true} title="Privacy Policy" subtitle="Privacy policy for EasyBillKit." />
       <section className="max-w-3xl mx-auto px-4 py-6 space-y-4">
         <div className="glass-card p-5 space-y-3 text-sm text-muted">
           <p><strong className="text-text">Local data:</strong> Invoices, estimates, receipts, clients, business profiles, and catalog items are stored in your browser (IndexedDB) on this device. We do not receive or store them on a server.</p>

@@ -51,8 +51,7 @@ export default function ClientsPage() {
 
   return (
     <>
-      <PageHeader showBack={true} />
-      <h1 className="text-2xl font-bold text-green-950 mb-4">Clients</h1>
+      <PageHeader showBack={true} title="Clients" subtitle="Locally saved client directory." />
       <section className="max-w-6xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-4">
           <button onClick={startNew} className="btn-primary px-4 py-2 rounded-xl text-sm font-medium">+ New client</button>
