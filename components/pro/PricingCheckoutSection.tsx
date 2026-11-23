@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import Link from "next/link";
 import { useLicenseStatus } from "@/hooks/useLicenseStatus";
 import PaddleCheckout from "./PaddleCheckout";
@@ -16,11 +15,11 @@ export default function PricingCheckoutSection() {
     return (
       <div className="space-y-2">
         <div className="glass-card p-4 text-center">
-          <p className="text-green-700 font-semibold">✓ Pro purchased</p>
-          <p className="text-xs text-muted mt-1">Pro is active on this browser.</p>
+          <p className="text-green-700 font-semibold">✓ Pro Active</p>
+          <p className="text-xs text-muted mt-1">Pro features unlocked on this browser.</p>
         </div>
-        <Link href="/activate" className="text-green-700 font-medium underline hover:text-green-800 text-center block">
-          Activate License
+        <Link href="/settings" className="btn-ghost px-5 py-3 rounded-xl font-medium text-center block">
+          Manage License
         </Link>
       </div>
     );

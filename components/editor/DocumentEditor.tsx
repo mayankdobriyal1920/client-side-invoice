@@ -17,6 +17,7 @@ import { formatCents } from "@/lib/calculations/money";
 import { generateDocumentPdf } from "@/lib/pdf/invoicePdf";
 import { required, validateEmail, validateDateOrder, validateDiscountPercent } from "@/lib/validation";
 import { formatDate, todayISO, addDaysISO } from "@/lib/formatting";
+import { useLicenseStatus } from "@/hooks/useLicenseStatus";
 function newId() {
   return Math.random().toString(36).slice(2) + Date.now().toString(36);
 }
@@ -60,6 +61,7 @@ function emptyDoc(type: DocumentType, number: string): BaseDocument {
 export default function DocumentEditor({ type }: Props) {
   const router = useRouter();
   const [doc, setDoc] = useState<BaseDocument | null>(null);
+  const { isPro } = useLicenseStatus();
   const [profiles, setProfiles] = useState<BusinessProfile[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
   const [catalog, setCatalog] = useState<CatalogItem[]>([]);
@@ -311,11 +313,16 @@ export default function DocumentEditor({ type }: Props) {
           <div className="flex items-center justify-between mb-3">
             <h2 className="font-semibold text-green-950">Line items</h2>
             <div className="flex gap-2">
-              {catalog.length > 0 && (
+              {isPro && catalog.length > 0 && (
                 <select className="glass-input px-2 py-1 text-xs" onChange={(e) => { if (e.target.value) pickCatalog(e.target.value); e.target.value = ""; }}>
                   <option value="">+ from catalog</option>
                   {catalog.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
+              )}
+              {!isPro && catalog.length > 0 && (
+                <button className="btn-ghost px-3 py-1 rounded-lg text-xs font-medium text-green-700 disabled:opacity-60" disabled>
+                  Premium templates (Pro)
+                </button>
               )}
               <button type="button" onClick={addLine} className="btn-primary px-3 py-1 rounded-lg text-xs font-medium">+ Add row</button>
             </div>

@@ -16,7 +16,6 @@ import {
   importBackup,
   isStorageAvailable,
 } from "@/lib/storage/db";
-
 function newId() { return Math.random().toString(36).slice(2) + Date.now().toString(36); }
 
 export default function SettingsPage() {
@@ -130,8 +129,17 @@ export default function SettingsPage() {
         <div className="glass-card p-5">
           <div className="flex items-center justify-between mb-3">
             <h2 className="font-semibold text-green-950">Business profiles</h2>
-            <button onClick={newProfile} className="btn-primary px-3 py-1 rounded-lg text-xs font-medium">+ New</button>
+            {isPro || profiles.length === 0 ? (
+              <button onClick={newProfile} className="btn-primary px-3 py-1 rounded-lg text-xs font-medium">+ New</button>
+            ) : (
+              <span className="text-xs text-muted">Pro feature: Upgrade for multiple profiles</span>
+            )}
           </div>
+          {!isPro && profiles.length >= 1 && (
+            <div className="mb-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
+              Multiple business profiles is a Pro feature. You have 1 active profile.
+            </div>
+          )}
           {editing && (
             <div className="space-y-3 mb-4">
               <input className="glass-input w-full px-3 py-2 text-sm" placeholder="Business / trading name" value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value })} />

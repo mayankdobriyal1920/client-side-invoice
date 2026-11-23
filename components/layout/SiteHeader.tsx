@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useLicenseStatus } from "@/hooks/useLicenseStatus";
 
 const nav = [
   { href: "/invoice-generator", label: "Invoice" },
@@ -20,6 +21,7 @@ export function SiteHeader() {
   const headerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const pathname = usePathname();
+  const { isPro, loading } = useLicenseStatus();
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -46,18 +48,24 @@ export function SiteHeader() {
           <span>EasyBillKit</span>
         </Link>
         <nav className="hidden md:flex items-center gap-1 text-sm">
-          {nav.map((n) => (
-            <Link
-              key={n.href}
-              href={n.href}
-              className={`px-3 py-2 rounded-xl text-sm transition ${pathname === n.href ? "text-green-700 bg-white/60" : "text-muted hover:text-text hover:bg-white/60"}`}
-            >
-              {n.label}
+          {nav.map((n) => {
+            // Hide "Activate License" if user is Pro
+            if (isPro && n.href === "/activate") return null;
+            return (
+              <Link
+                key={n.href}
+                href={n.href}
+                className={`px-3 py-2 rounded-xl text-sm transition ${pathname === n.href ? "text-green-700 bg-white/60" : "text-muted hover:text-text hover:bg-white/60"}`}
+              >
+                {n.label}
+              </Link>
+            )
+          })}
+          {loading ? null : (
+            <Link href="/invoice-generator" className="btn-primary ml-2 px-4 py-2 rounded-xl text-sm font-medium">
+              Create invoice
             </Link>
-          ))}
-          <Link href="/invoice-generator" className="btn-primary ml-2 px-4 py-2 rounded-xl text-sm font-medium">
-            Create invoice
-          </Link>
+          )}
         </nav>
         {/* Hamburger menu button (mobile only) */}
         <button
@@ -83,7 +91,7 @@ export function SiteHeader() {
               <button
                 key={n.href}
                 onClick={(e) => handleNavClick(n.href, e)}
-                className="block w-full text-left px-3 py-2.5 rounded-xl text-sm text-muted hover:text-text hover:bg-white/60 transition"
+                className={`block w-full text-left px-3 py-2.5 rounded-xl text-sm transition ${pathname === n.href ? "text-green-700 bg-white/60" : "text-muted hover:text-text hover:bg-white/60"}`}
               >
                 {n.label}
               </button>

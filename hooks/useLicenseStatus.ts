@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchLicenseStatus, getCachedLicenseStatus, type LicenseStatus } from "@/lib/license";
+import { fetchLicenseStatus, getCachedLicenseStatus, isProFromIndexedDB, type LicenseStatus } from "@/lib/license";
 
 export function useLicenseStatus() {
   const [status, setStatus] = useState<LicenseStatus>({ authenticated: false, isPro: false });
@@ -13,6 +13,11 @@ export function useLicenseStatus() {
     const cached = getCachedLicenseStatus();
     if (cached) {
       setStatus(cached);
+    }
+    // Check IndexedDB for Pro state
+    const fromIDB = await isProFromIndexedDB();
+    if (fromIDB) {
+      setStatus({ authenticated: true, isPro: true, plan: "lifetime_pro" });
     }
     // Verify with server (authoritative)
     const s = await fetchLicenseStatus();

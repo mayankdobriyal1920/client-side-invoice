@@ -45,3 +45,13 @@ export function clearCachedLicenseStatus() {
   if (typeof window === "undefined") return;
   localStorage.removeItem("ebk_pro_license");
 }
+
+export async function isProFromIndexedDB(): Promise<boolean> {
+  try {
+    const { getLicenseState } = await import("@/lib/storage/db");
+    const state = await getLicenseState();
+    return state.verified === true && state.pro === true;
+  } catch {
+    return false;
+  }
+}
