@@ -1,13 +1,16 @@
 import DocumentEditor from "@/components/editor/DocumentEditor";
-
 import { pageMetadata } from "@/lib/seo";
+import { PageHeader } from "@/components/layout/PageHeader";
+
 export const metadata = pageMetadata({ title: "Receipt Maker", description: "Create and download a receipt PDF in your browser.", path: "/receipt-maker" });
 
 export default function ReceiptMakerPage() {
   return (
-    <section className="max-w-6xl mx-auto px-4 py-6">
-      <h1 className="text-2xl font-bold text-green-950 mb-4">Receipt Maker</h1>
-      <DocumentEditor type="receipt" />
-    </section>
+    <>
+      <PageHeader title="Receipt Maker" subtitle="Create and download a receipt PDF in your browser." breadcrumbs={[ { label: "Home", href: "/" }, { label: "Receipt Maker" } ]} showBack={true} />
+      <section className="max-w-6xl mx-auto px-4 py-6">
+        <DocumentEditor type="receipt" />
+      </section>
+    </>
   );
 }

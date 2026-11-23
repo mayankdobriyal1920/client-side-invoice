@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { pageMetadata } from "@/lib/seo";
 import JsonLd from "@/components/seo/JsonLd";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 export const metadata = pageMetadata({
   title: "EasyBillKit — Free Invoice, Estimate & Receipt Maker",
@@ -31,6 +32,7 @@ export default function HomePage() {
         "url": "https://easybillkit.online",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       }} />
+      <PageHeader title="Home" breadcrumbs={[ { label: "Home" } ]} showBack={false} />
       <div className="relative">
       {/* Hero */}
       <section className="max-w-6xl mx-auto px-4 pt-10 pb-16 md:pt-16 md:pb-24">
