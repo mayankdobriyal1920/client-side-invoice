@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import PurchaseSuccessModal from "@/components/pro/PurchaseSuccessModal";
 
 declare global {
@@ -11,7 +10,6 @@ declare global {
 }
 
 export default function PaddleCheckout() {
-  const router = useRouter();
   const [ready, setReady] = useState(false);
   const [loading, setLoading] = useState(false);
   const [checkoutOpen, setCheckoutOpen] = useState(false);
@@ -91,9 +89,9 @@ export default function PaddleCheckout() {
         />
       </div>
       <button onClick={openCheckout} disabled={!ready || loading} className="btn-primary px-5 py-3 rounded-xl font-medium disabled:opacity-60 w-full">
-        {loading ? "Processing…" : ready ? "Buy Pro with Paddle" : "Loading checkout…"}
+        {loading ? "Processing…" : ready ? "Upgrade to Pro" : "Loading checkout…"}
       </button>
-      <PurchaseSuccessModal open={showModal} onClose={() => setShowModal(false)} onSuccess={() => router.push("/activate")} />
+      <PurchaseSuccessModal open={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 }

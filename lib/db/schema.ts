@@ -31,6 +31,7 @@ export const licenses = pgTable("licenses", {
   id: uuid("id").defaultRandom().primaryKey(),
   customerId: uuid("customer_id").notNull().references(() => customers.id),
   transactionId: uuid("transaction_id").notNull().references(() => transactions.id).unique(),
+  licenseKeyHash: text("license_key_hash").unique(),
   plan: text("plan").notNull().default("lifetime_pro"),
   status: text("status").notNull().default("active"),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
@@ -38,6 +39,7 @@ export const licenses = pgTable("licenses", {
 }, (t) => ({
   customerIdx: index("licenses_customer_idx").on(t.customerId),
   statusIdx: index("licenses_status_idx").on(t.status),
+  licenseKeyIdx: uniqueIndex("licenses_license_key_hash_idx").on(t.licenseKeyHash),
 }));
 
 export const activations = pgTable("activations", {

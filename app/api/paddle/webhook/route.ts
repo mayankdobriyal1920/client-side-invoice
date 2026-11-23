@@ -3,13 +3,19 @@ import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { customers, transactions, licenses, activations, webhookEvents } from "@/lib/db/schema";
 import { verifyPaddleSignature, PRO_PRICE_ID, isProPrice } from "@/lib/server/paddle";
-import { normalizeEmail, sha256 } from "@/lib/server/crypto";
+import { normalizeEmail, sha256, randomToken } from "@/lib/server/crypto";
 
 export const runtime = "nodejs";
 
 const PADDLE_API_BASE = process.env.NEXT_PUBLIC_PADDLE_ENV === "sandbox"
   ? "https://sandbox-api.paddle.com"
   : "https://api.paddle.com";
+
+function generateLicenseKey(): string {
+  // EBK-XXXX-XXXX-XXXX-XXXX format
+  const parts = Array.from({ length: 4 }, () => randomToken(2).toUpperCase());
+  return `EBK-${parts.join("-")}`;
+}
 
 async function fetchCustomerEmail(customerId: string): Promise<string | null> {
   const apiKey = process.env.PADDLE_API_KEY;
@@ -23,6 +29,36 @@ async function fetchCustomerEmail(customerId: string): Promise<string | null> {
     return json?.data?.email ?? null;
   } catch {
     return null;
+  }
+}
+
+async function sendLicenseKeyEmail(email: string, licenseKey: string): Promise<boolean> {
+  const resendKey = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.RESEND_FROM_EMAIL || "EasyBillKit <noreply@easybillkit.online>";
+  if (!resendKey) {
+    console.error("RESEND_API_KEY not configured");
+    return false;
+  }
+  try {
+    const resend = (await import("resend")).Resend;
+    const rs = new resend(resendKey);
+    await rs.emails.send({
+      from: fromEmail,
+      to: email,
+      subject: "Your EasyBillKit Pro License Key",
+      html: `
+        <p>Hello,</p>
+        <p>Thank you for purchasing EasyBillKit Pro!</p>
+        <p>Your license key is:</p>
+        <p style="font-size:20px;font-weight:bold;letter-spacing:2px;background:#f0f0f0;padding:12px;border-radius:6px">${licenseKey}</p>
+        <p>Go to <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://easybillkit.online"}/activate">activate your Pro license</a>.</p>
+        <p>If you did not make this purchase, please contact hello@easybillkit.online.</p>
+      `,
+    });
+    return true;
+  } catch (e) {
+    console.error("Resend send failed", e);
+    return false;
   }
 }
 
@@ -57,11 +93,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ received: true, duplicate: true }, { status: 200 });
   }
   if (existing.length > 0 && !existing[0].processedAt) {
-    // previous attempt failed; remove stale record and reprocess
     try { await db.delete(webhookEvents).where(eq(webhookEvents.paddleEventId, eventId)); } catch {}
   }
 
-  // Record event first (unique constraint prevents duplicate processing)
   try {
     await db.insert(webhookEvents).values({
       paddleEventId: eventId,
@@ -69,7 +103,6 @@ export async function POST(req: NextRequest) {
       processedAt: null,
     });
   } catch {
-    // duplicate insert race -> treat as already processed
     return NextResponse.json({ received: true, duplicate: true }, { status: 200 });
   }
 
@@ -106,7 +139,9 @@ export async function POST(req: NextRequest) {
       const currency = tx?.currency_code ?? "USD";
       const purchasedAt = tx?.completed_at ? new Date(tx.completed_at) : new Date();
 
-      // DB transaction: upsert customer, insert transaction, create license
+      // DB transaction: upsert customer, insert transaction, create license with key
+      let licenseKey: string | null = null;
+      let licenseKeyHash: string | null = null;
       await db.transaction(async (trx) => {
         // upsert customer
         let customer = await trx.select().from(customers).where(eq(customers.email, normalized)).limit(1);
@@ -146,32 +181,38 @@ export async function POST(req: NextRequest) {
         // create license if not exists
         const existingLicense = await trx.select().from(licenses).where(eq(licenses.transactionId, transactionId)).limit(1);
         if (existingLicense.length === 0) {
+          licenseKey = generateLicenseKey();
+          licenseKeyHash = sha256(licenseKey);
           await trx.insert(licenses).values({
             customerId,
             transactionId,
+            licenseKeyHash,
             plan: "lifetime_pro",
             status: "active",
           });
         } else if (existingLicense[0].status !== "active") {
           await trx.update(licenses).set({ status: "active", updatedAt: new Date() }).where(eq(licenses.id, existingLicense[0].id));
+          licenseKeyHash = existingLicense[0].licenseKeyHash ?? null;
         }
       });
 
+      // Send license key email outside the transaction
+      if (licenseKey) {
+        await sendLicenseKeyEmail(normalized, licenseKey);
+      }
+
       await db.update(webhookEvents).set({ processedAt: new Date() }).where(eq(webhookEvents.paddleEventId, eventId));
-      return NextResponse.json({ received: true }, { status: 200 });
+      return NextResponse.json({ received: true, licenseKey: licenseKey ?? licenseKeyHash ? "generated" : "existing" }, { status: 200 });
     }
 
     if (eventType === "transaction.refunded" || eventType === "adjustment.created") {
       const tx = event.data;
-      // For adjustment, check if it's a refund/chargeback
       let paddleTransactionId: string | null = null;
       if (eventType === "transaction.refunded") {
         paddleTransactionId = tx?.id ?? null;
       } else {
-        // adjustment: relates to a transaction
         paddleTransactionId = tx?.transaction_id ?? tx?.data?.transaction_id ?? null;
         const adjustmentType = tx?.action ?? tx?.type ?? "";
-        // only revoke on full refund/chargeback; if adjustment is partial, skip revocation
         if (adjustmentType && !String(adjustmentType).toLowerCase().includes("refund") && !String(adjustmentType).toLowerCase().includes("chargeback")) {
           await db.update(webhookEvents).set({ processedAt: new Date() }).where(eq(webhookEvents.paddleEventId, eventId));
           return NextResponse.json({ received: true, ignored: "non_refund_adjustment" }, { status: 200 });
@@ -195,12 +236,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ received: true }, { status: 200 });
     }
 
-    // Other events: mark processed
     await db.update(webhookEvents).set({ processedAt: new Date() }).where(eq(webhookEvents.paddleEventId, eventId));
     return NextResponse.json({ received: true }, { status: 200 });
   } catch (err) {
     console.error("Webhook processing error", err);
-    // remove the event record so Paddle retries can reprocess
     try { await db.delete(webhookEvents).where(eq(webhookEvents.paddleEventId, eventId)); } catch {}
     return NextResponse.json({ error: "Processing failed" }, { status: 500 });
   }
