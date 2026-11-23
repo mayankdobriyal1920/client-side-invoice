@@ -124,6 +124,7 @@ export default function SettingsPage() {
   return (
     <>
       <PageHeader showBack={true} />
+      <h1 className="text-2xl font-bold text-green-950 mb-4">Settings</h1>
       <section className="max-w-6xl mx-auto px-4 py-6 space-y-6">
         {!isStorageAvailable() && <p className="text-danger text-sm">Storage is unavailable in this browser.</p>}
         {msg && <p className="text-sm text-muted">{msg}</p>}

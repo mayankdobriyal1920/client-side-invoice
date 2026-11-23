@@ -9,6 +9,7 @@ export default function PricingPage() {
   return (
     <>
       <PageHeader showBack={true} />
+      <h1 className="text-2xl font-bold text-green-950 mb-4">Pricing</h1>
       <section className="max-w-6xl mx-auto px-4 py-6">
         <div className="grid gap-5 md:grid-cols-2">
           <div className="glass-card p-6">
