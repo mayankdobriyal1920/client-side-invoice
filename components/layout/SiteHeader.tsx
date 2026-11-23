@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const nav = [
   { href: "/invoice-generator", label: "Invoice" },
@@ -15,10 +15,22 @@ const nav = [
 
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuOpen && headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
 
   return (
     <header className="sticky top-0 z-40 no-print">
-      <div className="glass-strong mx-3 mt-3 rounded-2xl px-4 h-16 flex items-center justify-between md:mx-6">
+      <div ref={headerRef} className="glass-strong mx-3 mt-3 rounded-2xl px-4 h-16 flex items-center justify-between md:mx-6">
         <Link href="/" className="flex items-center gap-2 font-semibold text-green-900">
           <Image src="/logo.png" alt="EasyBillKit logo" width={30} height={30} className="rounded-lg" />
           <span>EasyBillKit</span>
@@ -39,7 +51,10 @@ export function SiteHeader() {
         </nav>
         {/* Hamburger menu button (mobile only) */}
         <button
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setMenuOpen(!menuOpen);
+          }}
           className="md:hidden p-2 rounded-xl text-green-950 hover:bg-white/60 focus:outline-none"
           aria-label="Toggle menu"
           aria-expanded={menuOpen}
