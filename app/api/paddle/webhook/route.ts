@@ -34,7 +34,7 @@ async function fetchCustomerEmail(customerId: string): Promise<string | null> {
 
 async function sendLicenseKeyEmail(email: string, licenseKey: string): Promise<boolean> {
   const resendKey = process.env.RESEND_API_KEY;
-  const fromEmail = process.env.RESEND_FROM_EMAIL || "EasyBillKit <noreply@easybillkit.online>";
+  const fromEmail = process.env.RESEND_FROM_EMAIL || "EasyBillKit <hello@easybillkit.online>";
   if (!resendKey) {
     console.error("RESEND_API_KEY not configured");
     return false;
@@ -45,15 +45,46 @@ async function sendLicenseKeyEmail(email: string, licenseKey: string): Promise<b
     await rs.emails.send({
       from: fromEmail,
       to: email,
-      subject: "Your EasyBillKit Pro License Key",
+      subject: "Your EasyBillKit Pro License Key 🎉",
       html: `
-        <p>Hello,</p>
-        <p>Thank you for purchasing EasyBillKit Pro!</p>
-        <p>Your license key is:</p>
-        <p style="font-size:20px;font-weight:bold;letter-spacing:2px;background:#f0f0f0;padding:12px;border-radius:6px">${licenseKey}</p>
-        <p>Go to <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://easybillkit.online"}/activate">activate your Pro license</a>.</p>
-        <p>If you did not make this purchase, please contact hello@easybillkit.online.</p>
-      `,
+<!DOCTYPE html>
+<html>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #0a1f33;">
+  <div style="text-align: center; margin-bottom: 24px;">
+    <h1 style="color: #0a9b68; margin-bottom: 8px;">Welcome to EasyBillKit Pro! 🎉</h1>
+    <p style="color: #666;">Your payment was successful. Here's your license key.</p>
+  </div>
+
+  <div style="background: #f0fdf4; border: 2px solid #0a9b68; border-radius: 12px; padding: 20px; text-align: center; margin: 24px 0;">
+    <p style="margin: 0 0 8px; font-size: 14px; color: #666;">Your License Key</p>
+    <p style="margin: 0; font-size: 24px; font-weight: bold; color: #0a9b68; letter-spacing: 2px; font-family: monospace;">${licenseKey}</p>
+  </div>
+
+  <h2 style="color: #0a9b68; font-size: 18px;">How to Activate (3 steps)</h2>
+  <ol style="color: #333; line-height: 1.8;">
+    <li>Go to <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://easybillkit.online"}/activate" style="color: #0a9b68;">Activate Pro</a></li>
+    <li>Enter your license key and a device name (e.g., "My iPhone")</li>
+    <li>Click <strong>Activate</strong> — Pro features unlock instantly</li>
+  </ol>
+
+  <div style="background: #f0fdf4; border-radius: 8px; padding: 16px; margin: 24px 0;">
+    <p style="margin: 0; font-size: 14px; color: #666;">
+      <strong>Device limit:</strong> You can activate on up to 3 devices. To free a slot, deactivate a device from the activation page.
+    </p>
+  </div>
+
+  <div style="background: #fff8e1; border-radius: 8px; padding: 16px; margin: 24px 0;">
+    <p style="margin: 0; font-size: 14px; color: #856404;">
+      <strong>Important:</strong> Save this email — it contains your license key. If you lose it, use the recovery option on the activation page.
+    </p>
+  </div>
+
+  <p style="color: #999; font-size: 12px; margin-top: 32px; text-align: center;">
+    EasyBillKit · <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://easybillkit.online"}" style="color: #999;">easybillkit.online</a><br/>
+    This email was sent because you purchased a Pro license.
+  </p>
+</body>
+</html>`,
     });
     return true;
   } catch (e) {
