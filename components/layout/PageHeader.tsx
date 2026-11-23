@@ -9,12 +9,12 @@ export function PageHeader({
 }) {
   const router = useRouter();
   return (
-    <div className="mb-6 pl-4">
+    <div className="mb-6">
       {showBack && (
         <div className="flex items-center gap-3">
           <button
             onClick={() => router.back()}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/80 text-green-950 shadow-sm hover:bg-white"
+            className="pl-4 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/80 text-green-950 shadow-sm hover:bg-white"
             aria-label="Go back"
           >
             ←
