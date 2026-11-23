@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const nav = [
@@ -17,6 +18,8 @@ const nav = [
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const pathname = usePathname();
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -28,6 +31,11 @@ export function SiteHeader() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
+
+  const handleNavClick = (href: string) => {
+    setMenuOpen(false);
+    router.push(href);
+  };
 
   return (
     <header className="sticky top-0 z-40 no-print">
@@ -41,7 +49,7 @@ export function SiteHeader() {
             <Link
               key={n.href}
               href={n.href}
-              className="px-3 py-2 rounded-xl text-muted hover:text-text hover:bg-white/60 transition"
+              className={`px-3 py-2 rounded-xl text-sm transition ${pathname === n.href ? "text-green-700 bg-white/60" : "text-muted hover:text-text hover:bg-white/60"}`}
             >
               {n.label}
             </Link>
@@ -71,22 +79,20 @@ export function SiteHeader() {
         <div className="md:hidden glass-strong mx-3 mt-2 rounded-2xl px-4 py-4 shadow-glass-lg border border-white/70">
           <nav className="flex flex-col gap-2">
             {nav.map((n) => (
-              <Link
+              <button
                 key={n.href}
-                href={n.href}
-                onClick={() => setMenuOpen(false)}
-                className="block px-3 py-2.5 rounded-xl text-sm text-muted hover:text-text hover:bg-white/60 transition"
+                onClick={() => handleNavClick(n.href)}
+                className="block w-full text-left px-3 py-2.5 rounded-xl text-sm text-muted hover:text-text hover:bg-white/60 transition"
               >
                 {n.label}
-              </Link>
+              </button>
             ))}
-            <Link
-              href="/invoice-generator"
-              onClick={() => setMenuOpen(false)}
-              className="block mt-2 px-3 py-2.5 rounded-xl btn-primary text-sm text-center font-medium"
+            <button
+              onClick={() => handleNavClick("/invoice-generator")}
+              className="block mt-2 w-full text-center px-3 py-2.5 rounded-xl btn-primary text-sm font-medium"
             >
               Create invoice
-            </Link>
+            </button>
           </nav>
         </div>
       )}
