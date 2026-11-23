@@ -32,13 +32,14 @@ export function SiteHeader() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
 
-  const handleNavClick = (href: string) => {
+  const handleNavClick = (href: string, e: React.MouseEvent) => {
+    e.stopPropagation();
     setMenuOpen(false);
     router.push(href);
   };
 
   return (
-    <header className="sticky top-0 z-40 no-print">
+    <header className="sticky top-0 z-50 no-print">
       <div ref={headerRef} className="glass-strong mx-3 mt-3 rounded-2xl px-4 h-16 flex items-center justify-between md:mx-6">
         <Link href="/" className="flex items-center gap-2 font-semibold text-green-900">
           <Image src="/logo.png" alt="EasyBillKit logo" width={30} height={30} className="rounded-lg" />
@@ -76,19 +77,19 @@ export function SiteHeader() {
       </div>
       {/* Mobile menu panel (solid background) */}
       {menuOpen && (
-        <div className="md:hidden glass-strong mx-3 mt-2 rounded-2xl px-4 py-4 shadow-glass-lg border border-white/70">
+        <div className="md:hidden glass-strong mx-3 mt-2 rounded-2xl px-4 py-4 shadow-glass-lg border border-white/70 z-50">
           <nav className="flex flex-col gap-2">
             {nav.map((n) => (
               <button
                 key={n.href}
-                onClick={() => handleNavClick(n.href)}
+                onClick={(e) => handleNavClick(n.href, e)}
                 className="block w-full text-left px-3 py-2.5 rounded-xl text-sm text-muted hover:text-text hover:bg-white/60 transition"
               >
                 {n.label}
               </button>
             ))}
             <button
-              onClick={() => handleNavClick("/invoice-generator")}
+              onClick={(e) => handleNavClick("/invoice-generator", e)}
               className="block mt-2 w-full text-center px-3 py-2.5 rounded-xl btn-primary text-sm font-medium"
             >
               Create invoice
