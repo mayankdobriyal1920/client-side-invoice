@@ -5,7 +5,8 @@
     "NEXT_PUBLIC_PADDLE_CLIENT_TOKEN": "",
     "NEXT_PUBLIC_PADDLE_PRICE_ID": "",
     "NEXT_PUBLIC_PADDLE_ENV": "production",
-    "NEXT_PUBLIC_PADDLE_DISCOUNT_SECRET": ""
+    "NEXT_PUBLIC_PADDLE_DISCOUNT_SECRET": "",
+    "RESEND_FROM_EMAIL": "hello@easybillkit.online"
   },
   "buildCommand": "npm run build",
   "devCommand": "npm run dev",
