@@ -47,12 +47,14 @@ export const activations = pgTable("activations", {
   licenseId: uuid("license_id").notNull().references(() => licenses.id),
   tokenHash: text("token_hash").notNull().unique(),
   deviceLabel: text("device_label"),
+  deviceHash: text("device_hash"),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
   lastUsedAt: timestamp("last_used_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 }, (t) => ({
   tokenIdx: uniqueIndex("activations_token_hash_idx").on(t.tokenHash),
   licenseIdx: index("activations_license_idx").on(t.licenseId),
+  deviceHashIdx: index("activations_device_hash_idx").on(t.deviceHash),
 }));
 
 export const otpChallenges = pgTable("otp_challenges", {

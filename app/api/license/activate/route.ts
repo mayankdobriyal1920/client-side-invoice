@@ -12,9 +12,19 @@ export async function POST(req: NextRequest) {
   let body: any;
   try { body = await req.json(); } catch { return NextResponse.json({ error: "Invalid JSON" }, { status: 400 }); }
   const licenseKey = body?.licenseKey;
+  const deviceName = body?.deviceName;
+  const deviceHash = body?.deviceHash;
+
   if (typeof licenseKey !== "string" || !licenseKey.trim()) {
     return NextResponse.json({ error: "License key is required" }, { status: 400 });
   }
+  if (typeof deviceName !== "string" || !deviceName.trim()) {
+    return NextResponse.json({ error: "Device name is required" }, { status: 400 });
+  }
+  if (typeof deviceHash !== "string" || !deviceHash.trim()) {
+    return NextResponse.json({ error: "Device identifier is required" }, { status: 400 });
+  }
+
   const key = licenseKey.trim().toUpperCase();
 
   // Basic format validation
@@ -34,18 +44,42 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "License is not active" }, { status: 403 });
   }
 
-  // Create activation session
+  // Check if this device is already activated
+  const existingActivations = await db.select().from(activations).where(eq(activations.licenseId, license.id));
+  const existingDevice = existingActivations.find(a => a.deviceLabel === deviceName);
+  if (existingDevice) {
+    // Reactivate existing device
+    const rawToken = randomToken(32);
+    const tokenHash = sha256(rawToken);
+    const expiresAt = new Date(Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000);
+    await db.update(activations).set({ tokenHash, expiresAt, lastUsedAt: new Date() }).where(eq(activations.id, existingDevice.id));
+
+    const isProd = process.env.NODE_ENV === "production";
+    const res = NextResponse.json({ success: true, isPro: true, plan: license.plan, signedToken: rawToken, expiresAt: expiresAt.toISOString() }, { status: 200 });
+    res.cookies.set("ebk_session", rawToken, {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: "lax",
+      path: "/",
+      maxAge: SESSION_DAYS * 24 * 60 * 60,
+    });
+    return res;
+  }
+
+  // Create new activation session
   const rawToken = randomToken(32);
   const tokenHash = sha256(rawToken);
   const expiresAt = new Date(Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000);
   await db.insert(activations).values({
     licenseId: license.id,
     tokenHash,
+    deviceLabel: deviceName,
+    deviceHash,
     expiresAt,
   });
 
   const isProd = process.env.NODE_ENV === "production";
-  const res = NextResponse.json({ success: true, isPro: true, plan: license.plan }, { status: 200 });
+  const res = NextResponse.json({ success: true, isPro: true, plan: license.plan, signedToken: rawToken, expiresAt: expiresAt.toISOString() }, { status: 200 });
   res.cookies.set("ebk_session", rawToken, {
     httpOnly: true,
     secure: isProd,
