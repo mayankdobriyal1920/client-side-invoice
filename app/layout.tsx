@@ -11,10 +11,11 @@ export const metadata: Metadata = {
   description:
     "Create professional invoices, estimates, and receipts in your browser. No account required. Export a clean PDF in seconds.",
   metadataBase: new URL("https://easybillkit.online"),
-  icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
-  },
+  icons: [
+    { rel: "icon", url: "/favicon.ico", sizes: "48x48 96x96 32x32 16x16", type: "image/x-icon" },
+    { rel: "icon", url: "/logo.png", sizes: "256x256", type: "image/png" },
+    { rel: "apple-touch-icon", url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
