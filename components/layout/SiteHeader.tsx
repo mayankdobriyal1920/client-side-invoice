@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 const nav = [
   { href: "/invoice-generator", label: "Invoice" },
@@ -11,6 +14,8 @@ const nav = [
 ];
 
 export function SiteHeader() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header className="sticky top-0 z-40 no-print">
       <div className="glass-strong mx-3 mt-3 rounded-2xl px-4 h-16 flex items-center justify-between md:mx-6">
@@ -32,24 +37,43 @@ export function SiteHeader() {
             Create invoice
           </Link>
         </nav>
-        <details className="md:hidden relative">
-          <summary className="list-none cursor-pointer px-3 py-2 rounded-xl btn-ghost">Menu</summary>
-          <div className="absolute right-0 mt-2 w-56 glass-strong rounded-2xl p-2 shadow-glass-lg">
+        {/* Hamburger menu button (mobile only) */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="md:hidden p-2 rounded-xl text-green-950 hover:bg-white/60 focus:outline-none"
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+        >
+          <span className="sr-only">Menu</span>
+          <div className="w-6 h-0.5 bg-green-950 mb-1.5 rounded"></div>
+          <div className="w-6 h-0.5 bg-green-950 mb-1.5 rounded"></div>
+          <div className="w-6 h-0.5 bg-green-950 rounded"></div>
+        </button>
+      </div>
+      {/* Mobile menu panel (solid background) */}
+      {menuOpen && (
+        <div className="md:hidden glass-strong mx-3 mt-2 rounded-2xl px-4 py-4 shadow-glass-lg border border-white/70">
+          <nav className="flex flex-col gap-2">
             {nav.map((n) => (
               <Link
                 key={n.href}
                 href={n.href}
-                className="block px-3 py-2 rounded-xl text-sm text-muted hover:text-text hover:bg-white/60"
+                onClick={() => setMenuOpen(false)}
+                className="block px-3 py-2.5 rounded-xl text-sm text-muted hover:text-text hover:bg-white/60 transition"
               >
                 {n.label}
               </Link>
             ))}
-            <Link href="/invoice-generator" className="block mt-1 px-3 py-2 rounded-xl btn-primary text-sm text-center font-medium">
+            <Link
+              href="/invoice-generator"
+              onClick={() => setMenuOpen(false)}
+              className="block mt-2 px-3 py-2.5 rounded-xl btn-primary text-sm text-center font-medium"
+            >
               Create invoice
             </Link>
-          </div>
-        </details>
-      </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
