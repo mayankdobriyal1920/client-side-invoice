@@ -70,6 +70,15 @@ export default function PaddleCheckout() {
           setLoading(false);
           setDiscountCode("");
           setPurchaseComplete(true);
+          alert(
+            "Thank you for your purchase! 🎉\n\n" +
+            "Your license key has been sent to your email.\n\n" +
+            "To activate Pro:\n" +
+            "1. Check your email for your license key (EBK-XXXX-XXXX-XXXX-XXXX).\n" +
+            "2. Go to easybillkit.online/activate\n" +
+            "3. Enter your license key and click Activate.\n\n" +
+            "Pro features will unlock instantly."
+          );
         }
       });
     } else {
