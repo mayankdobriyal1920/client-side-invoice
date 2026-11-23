@@ -16,7 +16,6 @@ export default function ActivatePage() {
       setMessage("Please enter your license key.");
       return;
     }
-    // Basic format check: EBK-XXXX-XXXX-XXXX-XXXX
     if (!/^EBK-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(key)) {
       setMessage("Invalid license key format. Expected: EBK-XXXX-XXXX-XXXX-XXXX");
       return;
@@ -54,12 +53,10 @@ export default function ActivatePage() {
 
   return (
     <section className="max-w-3xl mx-auto px-4 py-6 space-y-4">
-      <h1 className="text-2xl font-bold text-green-950">Activate EasyBillKit Pro</h1>
       <div className="glass-card p-5 space-y-3 text-sm text-muted">
-        <p>
-          Enter your EasyBillKit Pro license key to activate Pro on this browser. You received this key by email after purchase.
-        </p>
-        {isPro && <p className="text-green-700 font-medium">Pro is active on this browser.</p>}
+        <h2 className="text-xl font-bold text-green-950">Activate Pro</h2>
+        <p className="mt-2">Enter your EasyBillKit Pro license key to unlock Pro features.</p>
+        {isPro && <span className="text-green-700 font-medium">Pro is active on this browser.</span>}
         <input
           className="glass-input w-full px-3 py-2 text-sm font-mono uppercase"
           placeholder="EBK-XXXX-XXXX-XXXX-XXXX"
@@ -68,7 +65,7 @@ export default function ActivatePage() {
           maxLength={23}
         />
         <button onClick={activate} disabled={loading} className="btn-primary px-5 py-2 rounded-xl font-medium disabled:opacity-60 w-full">
-          {loading ? "Activating…" : "Activate Pro"}
+          {loading ? "Activating…" : "Activate"}
         </button>
         {message && <p className="text-sm">{message}</p>}
         {isPro && (

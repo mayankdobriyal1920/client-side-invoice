@@ -11,6 +11,7 @@ const nav = [
   { href: "/documents", label: "Documents" },
   { href: "/clients", label: "Clients" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/activate", label: "Activate License" },
 ];
 
 export function SiteHeader() {
