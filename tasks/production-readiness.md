@@ -1,6 +1,6 @@
-# SimpleInvoice Studio — Production Readiness Task Tracker
+# EasyBillKit — Production Readiness Task Tracker
 
-**Project:** SimpleInvoice Studio (client-side-invoice)  
+**Project:** EasyBillKit (client-side-invoice)  
 **Spec:** `invoice_studio_production_spec.md`  
 **Created:** 22 November 2026  
 **Status legend:** `[ ]` not started · `[x]` done · `[~]` in progress  

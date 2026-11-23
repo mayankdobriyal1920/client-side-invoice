@@ -6,7 +6,7 @@ export function SiteFooter() {
       <div className="glass rounded-2xl px-6 py-8 max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row gap-6 justify-between">
           <div>
-            <p className="font-semibold text-green-900">SimpleInvoice Studio</p>
+            <p className="font-semibold text-green-900">EasyBillKit</p>
             <p className="text-sm text-muted mt-1 max-w-md">
               Create professional invoices, estimates, and receipts in your browser. No account required.
               Your documents stay in this browser on this device.
@@ -31,7 +31,7 @@ export function SiteFooter() {
           </div>
         </div>
         <div className="mt-6 pt-4 border-t border-white/60 flex flex-col md:flex-row gap-2 justify-between text-xs text-muted">
-          <p>© {new Date().getFullYear()} SimpleInvoice Studio. Browser-local data.</p>
+          <p>© {new Date().getFullYear()} EasyBillKit. Browser-local data.</p>
           <a href="mailto:hello@easybillkit.online" className="hover:text-text">hello@easybillkit.online</a>
         </div>
       </div>

@@ -7,7 +7,7 @@ import VitalsReporter from "@/components/layout/VitalsReporter";
 import OfflineBanner from "@/components/layout/OfflineBanner";
 
 export const metadata: Metadata = {
-  title: "SimpleInvoice Studio — Free Invoice, Estimate & Receipt Maker",
+  title: "EasyBillKit — Free Invoice, Estimate & Receipt Maker",
   description:
     "Create professional invoices, estimates, and receipts in your browser. No account required. Export a clean PDF in seconds.",
   metadataBase: new URL("https://easybillkit.online"),
