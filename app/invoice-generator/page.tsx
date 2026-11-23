@@ -7,7 +7,7 @@ export const metadata = pageMetadata({ title: "Free Invoice Generator", descript
 export default function InvoiceGeneratorPage() {
   return (
     <>
-      <PageHeader title="Invoice Generator" subtitle="Create and download a professional invoice PDF in your browser." breadcrumbs={[ { label: "Home", href: "/" }, { label: "Invoice Generator" } ]} showBack={true} />
+      <PageHeader showBack={true} />
       <section className="max-w-6xl mx-auto px-4 py-6">
         <DocumentEditor type="invoice" />
       </section>

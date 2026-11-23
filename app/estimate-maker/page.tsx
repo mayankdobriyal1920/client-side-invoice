@@ -7,7 +7,7 @@ export const metadata = pageMetadata({ title: "Free Estimate Maker", description
 export default function EstimateMakerPage() {
   return (
     <>
-      <PageHeader title="Estimate Maker" subtitle="Create and download a professional estimate PDF in your browser." breadcrumbs={[ { label: "Home", href: "/" }, { label: "Estimate Maker" } ]} showBack={true} />
+      <PageHeader showBack={true} />
       <section className="max-w-6xl mx-auto px-4 py-6">
         <DocumentEditor type="estimate" />
       </section>

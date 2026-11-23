@@ -51,7 +51,7 @@ export default function ClientsPage() {
 
   return (
     <>
-      <PageHeader title="Clients" subtitle="Locally saved client directory." breadcrumbs={[ { label: "Home", href: "/" }, { label: "Clients" } ]} showBack={true} />
+      <PageHeader showBack={true} />
       <section className="max-w-6xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-4">
           <button onClick={startNew} className="btn-primary px-4 py-2 rounded-xl text-sm font-medium">+ New client</button>

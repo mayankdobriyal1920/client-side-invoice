@@ -6,7 +6,7 @@ export const metadata = pageMetadata({ title: "Terms", description: "Terms of us
 export default function TermsPage() {
   return (
     <>
-      <PageHeader title="Terms" subtitle="Terms of use for EasyBillKit." breadcrumbs={[ { label: "Home", href: "/" }, { label: "Terms" } ]} showBack={true} />
+      <PageHeader showBack={true} />
       <section className="max-w-3xl mx-auto px-4 py-6 space-y-4">
         <div className="glass-card p-5 space-y-3 text-sm text-muted">
           <p>EasyBillKit provides document-generation functionality only. It is not accounting, tax, or legal advice. You are responsible for the accuracy of information, tax rates, and document compliance.</p>

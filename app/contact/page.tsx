@@ -6,7 +6,7 @@ export const metadata = pageMetadata({ title: "Contact", description: "Contact E
 export default function ContactPage() {
   return (
     <>
-      <PageHeader title="Contact" subtitle="Contact EasyBillKit Studio." breadcrumbs={[ { label: "Home", href: "/" }, { label: "Contact" } ]} showBack={true} />
+      <PageHeader showBack={true} />
       <section className="max-w-3xl mx-auto px-4 py-6 space-y-4">
         <div className="glass-card p-5 space-y-3 text-sm text-muted">
           <p>For support, feedback, or corrections, email us:</p>

@@ -123,7 +123,7 @@ export default function SettingsPage() {
 
   return (
     <>
-      <PageHeader title="Settings" subtitle="Business profile, preferences, and backup." breadcrumbs={[ { label: "Home", href: "/" }, { label: "Settings" } ]} showBack={true} />
+      <PageHeader showBack={true} />
       <section className="max-w-6xl mx-auto px-4 py-6 space-y-6">
         {!isStorageAvailable() && <p className="text-danger text-sm">Storage is unavailable in this browser.</p>}
         {msg && <p className="text-sm text-muted">{msg}</p>}

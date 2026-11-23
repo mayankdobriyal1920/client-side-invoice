@@ -7,7 +7,7 @@ export const metadata = pageMetadata({ title: "Receipt Maker", description: "Cre
 export default function ReceiptMakerPage() {
   return (
     <>
-      <PageHeader title="Receipt Maker" subtitle="Create and download a receipt PDF in your browser." breadcrumbs={[ { label: "Home", href: "/" }, { label: "Receipt Maker" } ]} showBack={true} />
+      <PageHeader showBack={true} />
       <section className="max-w-6xl mx-auto px-4 py-6">
         <DocumentEditor type="receipt" />
       </section>

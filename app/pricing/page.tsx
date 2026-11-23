@@ -8,7 +8,7 @@ export const metadata = pageMetadata({ title: "Pricing", description: "Free vs P
 export default function PricingPage() {
   return (
     <>
-      <PageHeader title="Pricing" subtitle="Free vs Pro for EasyBillKit." breadcrumbs={[ { label: "Home", href: "/" }, { label: "Pricing" } ]} showBack={true} />
+      <PageHeader showBack={true} />
       <section className="max-w-6xl mx-auto px-4 py-6">
         <div className="grid gap-5 md:grid-cols-2">
           <div className="glass-card p-6">
