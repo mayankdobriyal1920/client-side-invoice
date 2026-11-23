@@ -1,12 +1,10 @@
 import { pageMetadata } from "@/lib/seo";
-import { PageHeader } from "@/components/layout/PageHeader";
 
 export const metadata = pageMetadata({ title: "Terms", description: "Terms of use for EasyBillKit.", path: "/terms" });
 
 export default function TermsPage() {
   return (
     <>
-      <PageHeader showBack={true} title="Terms" subtitle="Terms of use for EasyBillKit." />
       <section className="max-w-3xl mx-auto px-4 py-6 space-y-4">
         <div className="glass-card p-5 space-y-3 text-sm text-muted">
           <p>EasyBillKit provides document-generation functionality only. It is not accounting, tax, or legal advice. You are responsible for the accuracy of information, tax rates, and document compliance.</p>

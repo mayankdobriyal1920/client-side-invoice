@@ -16,7 +16,6 @@ import {
   importBackup,
   isStorageAvailable,
 } from "@/lib/storage/db";
-import { PageHeader } from "@/components/layout/PageHeader";
 
 function newId() { return Math.random().toString(36).slice(2) + Date.now().toString(36); }
 
@@ -123,7 +122,6 @@ export default function SettingsPage() {
 
   return (
     <>
-      <PageHeader showBack={true} title="Settings" subtitle="Business profile, preferences, and backup." />
       <section className="max-w-6xl mx-auto px-4 py-6 space-y-6">
         {!isStorageAvailable() && <p className="text-danger text-sm">Storage is unavailable in this browser.</p>}
         {msg && <p className="text-sm text-muted">{msg}</p>}

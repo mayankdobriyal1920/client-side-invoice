@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
-import { PageHeader } from "@/components/layout/PageHeader";
 import PricingCheckoutSection from "@/components/pro/PricingCheckoutSection";
 
 export const metadata = pageMetadata({ title: "Pricing", description: "Free vs Pro for EasyBillKit.", path: "/pricing" });
@@ -8,7 +7,6 @@ export const metadata = pageMetadata({ title: "Pricing", description: "Free vs P
 export default function PricingPage() {
   return (
     <>
-      <PageHeader showBack={true} title="Pricing" subtitle="Free vs Pro for EasyBillKit." />
       <section className="max-w-6xl mx-auto px-4 py-6">
         <div className="grid gap-5 md:grid-cols-2">
           <div className="glass-card p-6">

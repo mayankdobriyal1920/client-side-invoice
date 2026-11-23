@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import type { Client } from "@/types";
 import { listClients, saveClient, deleteClient } from "@/lib/storage/db";
 import { required, validateEmail, validatePhone, validateZip } from "@/lib/validation";
-import { PageHeader } from "@/components/layout/PageHeader";
 
 function newId() { return Math.random().toString(36).slice(2) + Date.now().toString(36); }
 
@@ -51,7 +50,6 @@ export default function ClientsPage() {
 
   return (
     <>
-      <PageHeader showBack={true} title="Clients" subtitle="Locally saved client directory." />
       <section className="max-w-6xl mx-auto px-4 py-6">
         <div className="flex items-center justify-between mb-4">
           <button onClick={startNew} className="btn-primary px-4 py-2 rounded-xl text-sm font-medium">+ New client</button>

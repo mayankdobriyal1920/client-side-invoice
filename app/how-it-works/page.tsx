@@ -1,12 +1,10 @@
 import { pageMetadata } from "@/lib/seo";
-import { PageHeader } from "@/components/layout/PageHeader";
 
 export const metadata = pageMetadata({ title: "How It Works", description: "How EasyBillKit calculates and stores data.", path: "/how-it-works" });
 
 export default function HowItWorksPage() {
   return (
     <>
-      <PageHeader showBack={true} title="How It Works" subtitle="How EasyBillKit calculates and stores data." />
       <section className="max-w-3xl mx-auto px-4 py-6 space-y-4">
         <div className="glass-card p-5 space-y-3 text-sm text-muted">
           <p><strong className="text-text">Calculations:</strong> All line totals, discounts, taxes, and balances are computed in your browser using decimal-safe (cents) arithmetic. Tax is user-configured; we do not fetch or infer any tax rate.</p>
