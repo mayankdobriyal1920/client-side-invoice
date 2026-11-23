@@ -19,7 +19,7 @@ export default function PricingCheckoutSection() {
           <p className="text-green-700 font-semibold">✓ Pro purchased</p>
           <p className="text-xs text-muted mt-1">Pro is active on this browser.</p>
         </div>
-        <Link href="/activate" className="btn-ghost px-5 py-3 rounded-xl font-medium text-center block">
+        <Link href="/activate" className="text-green-700 font-medium underline hover:text-green-800 text-center block">
           Activate License
         </Link>
       </div>
@@ -29,7 +29,7 @@ export default function PricingCheckoutSection() {
   return (
     <div className="space-y-3">
       <PaddleCheckout />
-      <Link href="/activate" className="btn-ghost px-5 py-3 rounded-xl font-medium text-center block">
+      <Link href="/activate" className="text-green-700 font-medium underline hover:text-green-800 text-center block">
         Already purchased? Activate License
       </Link>
     </div>

@@ -16,9 +16,9 @@ export function PageHeader({
 }) {
   const router = useRouter();
   return (
-    <div className="mb-6">
+    <div className="mb-6 pl-4">
       {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 pl-4">
         {showBack && (
           <button
             onClick={() => router.back()}
